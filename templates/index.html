@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>TalkWave - An OpenAI Virtual Developer Bot</title>
+
+    <link rel="icon" href="../favicon.ico">
+    <meta name="theme-color" content="#e82440">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!--Header-->
+    <header class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark">
+        <div class="container-fluid d-flex align-items-center">
+            <h1 class="d-flex align-items-center fs-4 text-white mb-0">
+            <img src="/static/images/talkwave.svg" width="33" height="33" class="me-3" alt="TalkWave">
+            TalkWave
+            </h1>
+        </div>
+        <div class="container d-flex flex-wrap justify-content-end">
+         <nav class="d-flex align-items-center">
+            <a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/">Home</a>
+            <a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/log">Log</a>
+        </nav>
+      </div>
+    </header>
+
+    <!--Main-->
+    <main>
+        <div class="container-fluid py-5">
+            <section class="p-5 mb-4 container bg-light rounded-3">
+                <div class="py-5">
+                    <div class="col-lg-12">
+                        <h2 class="text-body-emphasis">TalkWave</h2>
+                        <p class="col-md-12 fs-4">TalkWave is an artificial intelligence virtual developer bot that assists you in your software development process. It interacts with you through natural language processing and provides you with the information, ideas, and resources you need to complete your project faster and easier.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="container py-4">
+                <!--Form-->
+                    <!--Create a POST request that posts to this webpage the required fields of 'prompt','temperature','model','max-token'-->
+                    <form action="/api" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="prompt">Prompt</label>
+                            <input type="text" class="form-control" id="prompt" name="prompt" placeholder="Enter prompt">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="temperature">Temperature</label>
+                            <!--Temperature is a int value from 0 to 1, step 0.01-->
+                            <input type="number" class="form-control" id="temperature" name="temperature" placeholder="Enter temperature" min="0" max="1" step="0.01">
+                            </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="model">Model</label>
+                            <!--Model , choose from a predefined set of strings-->
+                            <select class="form-control" id="model" name="model">
+                                <option value="Davinci">Davinci - Most capable GPT-3 model, suitable for complex tasks</option>
+                                <option value="Curie">Curie - GPT-3 model with a balance of capability and cost, suitable for various tasks</option>
+                                <option value="Babbage">Babbage - GPT-3 model with moderate capability, useful for specific tasks</option>
+                                <option value="Ada">Ada - Smallest and least expensive GPT-3 model, suitable for simple tasks</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="max_tokens">Max Tokens</label>
+                            <input type="number" class="form-control" id="max_tokens" name="max_tokens" placeholder="Enter max_tokens">
+                        </div>
+                        <div class="container d-flex flex-wrap justify-content-end">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                    <!--If a response is received from the open-ai-api display the response-->
+                    {% if response %}
+                    <div class="jumbotron">
+                        <h1>Response</h1>
+                        <p>{{response}}</p>
+                    </div>
+                    {% endif %}
+
+                <footer class="pt-3 mt-4 text-body-secondary border-top">
+                    Copyright &copy; TalkWave 2023. All rights reserved.
+                </footer>
+            </section>
+        </div>
+    </main>
+    </body>
+</html>
