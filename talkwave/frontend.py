@@ -54,7 +54,7 @@ def index():
         temperature = float(
             request.form.get('temperature', 0.5)
         )
-        user_id = int(
+        user_id = str(
             request.form.get('user_id', 'example_user')
         )
         rate_limit_seconds = int(
