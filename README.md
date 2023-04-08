@@ -76,7 +76,32 @@ python talkwave --help
 ## File Structure 📁
 
 ```bash
-
+.
+├── talkwave
+│   ├── data
+│   ├── templates
+│   │   ├── 404.html
+│   │   └── index.html
+│   ├── utils
+│   │   ├── curl.py
+│   │   └── dir.py
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── core.py
+│   └── frontend.py
+├── CONTRIBUTING.md
+├── Dockerfile
+├── LICENSE-APACHE
+├── LICENSE-MIT
+├── MANIFEST.in
+├── README.md
+├── README_fr.md
+├── TEMPLATE.md
+├── openai-key.env
+├── pylintrc
+├── requirements.txt
+├── setup.cfg
+└── setup.py
 ```
 
 ## License 📜

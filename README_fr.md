@@ -68,7 +68,38 @@ Pour plus d'informations sur les options disponibles, exécutez:
 python talkwave --help
 ```
 
-## Licence 📜
+## Structure des fichiers 📁
+
+```bash
+.
+├── talkwave
+│   ├── data
+│   ├── templates
+│   │   ├── 404.html
+│   │   └── index.html
+│   ├── utils
+│   │   ├── curl.py
+│   │   └── dir.py
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── core.py
+│   └── frontend.py
+├── CONTRIBUTING.md
+├── Dockerfile
+├── LICENSE-APACHE
+├── LICENSE-MIT
+├── MANIFEST.in
+├── README.md
+├── README_fr.md
+├── TEMPLATE.md
+├── openai-key.env
+├── pylintrc
+├── requirements.txt
+├── setup.cfg
+└── setup.py
+```
+
+## License 📜
 
 Le projet est sous licence des termes de la licence MIT et de la Licence Apache (Version 2.0).
 
