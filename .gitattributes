@@ -1,0 +1,4 @@
+*.md eol=lf
+*.mdx eol=lf
+*.py eol=lf
+*.rst eol=lf

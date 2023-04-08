@@ -13,6 +13,82 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""The Python talkwave module."""
-__all__ = ["talkwave"]
+"""
+
+# TalkWave
+
+
+TalkWave is a Python package that provides an easy-to-use command-line
+interface for interacting with OpenAI's GPT-powered language models.
+
+## Features
+
+- Supports multiple GPT models for generating responses.
+- Accepts a range of parameters to customize the response, such as max
+tokens, temperature, and stopping conditions.
+- Stores responses in log files, JSON, and Markdown formats for easy
+analysis and sharing.
+- Provides rate limiting functionality to prevent exceeding API limits
+and incurring charges.
+
+## Requirements
+
+- Python 3.6 or higher
+- The `openai`, `tabulate`, and `python-dotenv` packages
+- An OpenAI API key (get one [here](https://openai.com/))
+
+## Installation
+
+1. Install the required packages:
+
+```bash
+pip install openai tabulate python-dotenv
+```
+
+1. Clone the TalkWave repository:
+
+```bash
+git clone https://github.com/yourusername/talkwave.git
+```
+
+3. Add your OpenAI API key to a `.env` file in the project directory:
+
+```bash
+OPENAI_API_KEY="your_api_key_here"
+```
+
+## Usage
+
+To use TalkWave, navigate to the project directory in your terminal and
+run the following command:
+
+```bash
+python talkwave -p "Your prompt here"
+```
+
+You can also specify additional options, such as the GPT model, maximum
+tokens, temperature, and user ID:
+
+```bash
+python talkwave -m 1 -p "Tell me a joke" -t 50 -T 0.5 -u "test@test.com" -r 5 -s "."
+```
+
+For more information on the available options, run:
+
+```bash
+python talkwave --help
+```
+
+
+## License
+
+The project is licensed under the terms of both the MIT license and the
+Apache License (Version 2.0).
+
+- [Apache License, Version 2.0](https://opensource.org/license/apache-2-0/)
+- [MIT license](https://opensource.org/licenses/MIT)
+
+"""
 __version__ = "0.0.1"
+__author__ = "Sebastien Rousseau"
+__email__ = "sebastian.rousseau at gmail.com"

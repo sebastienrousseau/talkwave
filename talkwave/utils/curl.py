@@ -106,4 +106,6 @@ def request(
                 if 'text' in choice and stop in choice['text'].lower():
                     raise StopIteration('Received "stop" message from AI')
 
+    # print(response.json())
+
     return response.json()

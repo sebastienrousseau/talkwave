@@ -2,6 +2,7 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
+#
 # You may obtain a copy of the License at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -14,50 +15,75 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from flask import render_template, request
 import flask
-import os
+from core import main
 
-from routes.api import api
-from routes.details import details
-from routes.home import home
-from routes.log import log
-from routes.errors import page_not_found
-from routes.resume import resume
-from routes.test import test
-
-# Flask app should start in global layout
+# Initialize a Flask app instance
 app = flask.Flask(__name__)
 
-# Se
+# Set the data directory
 app.config["DEBUG"] = True
+# app.config["PROPAGATE_EXCEPTIONS"] = True
 
-data_dir_name = "data"
-data_dir = os.path.join(os.path.dirname(
-    os.path.abspath(__file__)), data_dir_name)
 
-# Register the home route
-app.route('/')(home)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    """
+    This function defines the behavior of the root URL '/'.
 
-# Register the api route
-app.route('/api')(api)
+    When a GET request is received, it renders the 'index.html'
+    template.
 
-# Register the log route
-app.route('/log')(log)
+    When a POST request is received, it reads the parameters from the
+    request form and passes them to the 'main' function in the 'core'
+    module. It then renders the 'index.html' template with the response
+    returned from 'main'.
 
-# Register the details route
-app.route('/details/<filename>')(details)
+    Returns:
+        A rendered HTML template.
+    """
+    if request.method == 'POST':
+        model = int(
+            request.form.get('model', 1)
+        )
+        prompt = request.form['prompt']
+        max_tokens = int(
+            request.form.get('max_tokens', 50)
+        )
+        temperature = float(
+            request.form.get('temperature', 0.5)
+        )
+        user_id = int(
+            request.form.get('user_id', 'example_user')
+        )
+        rate_limit_seconds = int(
+            request.form.get('rate_limit_seconds', 5)
+        )
+        stop = str(
+            request.form.get('stop', None)
+        )
 
-# Register the 404 route
-app.errorhandler(404)(page_not_found)
+        response = main(
+            model,
+            prompt,
+            max_tokens,
+            temperature,
+            user_id,
+            rate_limit_seconds,
+            stop
+        )
+        return render_template('index.html', response=response)
+    else:
+        return render_template('index.html')
 
-# Register the 500 route
-app.errorhandler(500)(page_not_found)
 
-# Register the resume route
-app.route('/resume/<filename>')(resume)
+if __name__ == '__main__':
+    """
+    This block of code starts the Flask app if the script is run as the
+    main module.
 
-# Register the test route
-app.route('/test')(test)
-
-# Run the application
-app.run()
+    Returns:
+        None.
+    """
+    app.run()

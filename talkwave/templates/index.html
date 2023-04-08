@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en" data-bs-theme="dark">
   <head>
     <!-- Required meta tags -->
@@ -20,15 +19,17 @@
     <!--Header-->
     <header class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark">
         <div class="container-fluid d-flex align-items-center">
+            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-white text-decoration-none" title="TalkWave">
             <h1 class="d-flex align-items-center fs-4 text-white mb-0">
-            <img src="/static/images/talkwave.svg" width="33" height="33" class="me-3" alt="TalkWave">
+            <img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/icon/ico-talkwave.svg" width="33" height="33" class="me-3" alt="TalkWave">
             TalkWave
             </h1>
+            </a>
         </div>
         <div class="container d-flex flex-wrap justify-content-end">
          <nav class="d-flex align-items-center">
             <a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/">Home</a>
-            <a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/log">Log</a>
+            <!-- a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/log">Log</a -->
         </nav>
       </div>
     </header>
@@ -40,6 +41,7 @@
                 <div class="py-5">
                     <div class="col-lg-12">
                         <h2 class="text-body-emphasis">TalkWave</h2>
+                        <img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/title/title-talkwave.svg" class="py-5" style=" width: 100%; max-width: 900px" alt="TalkWave">
                         <p class="col-md-12 fs-4">TalkWave is an artificial intelligence virtual developer bot that assists you in your software development process. It interacts with you through natural language processing and provides you with the information, ideas, and resources you need to complete your project faster and easier.</p>
                     </div>
                 </div>
@@ -48,40 +50,47 @@
             <section class="container py-4">
                 <!--Form-->
                     <!--Create a POST request that posts to this webpage the required fields of 'prompt','temperature','model','max-token'-->
-                    <form action="/api" method="POST">
+                    <form action="/" method="POST">
                         <div class="mb-3">
-                            <label class="form-label" for="prompt">Prompt</label>
-                            <input type="text" class="form-control" id="prompt" name="prompt" placeholder="Enter prompt">
+                            <label class="form-label" for="prompt">Enter your prompt:</label>
+                            <input class="form-control" type="text" id="prompt" name="prompt" required><br><br>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="temperature">Temperature</label>
-                            <!--Temperature is a int value from 0 to 1, step 0.01-->
-                            <input type="number" class="form-control" id="temperature" name="temperature" placeholder="Enter temperature" min="0" max="1" step="0.01">
-                            </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="model">Model</label>
-                            <!--Model , choose from a predefined set of strings-->
-                            <select class="form-control" id="model" name="model">
-                                <option value="Davinci">Davinci - Most capable GPT-3 model, suitable for complex tasks</option>
-                                <option value="Curie">Curie - GPT-3 model with a balance of capability and cost, suitable for various tasks</option>
-                                <option value="Babbage">Babbage - GPT-3 model with moderate capability, useful for specific tasks</option>
-                                <option value="Ada">Ada - Smallest and least expensive GPT-3 model, suitable for simple tasks</option>
-                            </select>
+                            <label class="form-label" for="model">Select a model:</label>
+                            <select id="model" name="model">
+                                <option value="1">gpt-3.5-turbo</option>
+                                <option value="2">text-davinci-002</option>
+                                <option value="3">text-curie-001</option>
+                                <option value="4">text-babbage-001</option>
+                                <option value="5">text-ada-001</option>
+                            </select><br><br>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="max_tokens">Max Tokens</label>
-                            <input type="number" class="form-control" id="max_tokens" name="max_tokens" placeholder="Enter max_tokens">
+                            <label class="form-label" for="max_tokens">Enter the maximum number of tokens:</label>
+                            <input class="form-control" type="number" id="max_tokens" name="max_tokens" value="50" min="1" max="2048"><br><br>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="temperature">Enter the temperature:</label>
+                            <input class="form-control" type="number" id="temperature" name="temperature" value="0.5" step="0.1" min="0.1" max="1.0"><br><br>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="user_id">Enter the user ID:</label>
+                            <input class="form-control" type="text" id="user_id" name="user_id" value="example_user"><br><br>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="stop">Enter the stop sequence:</label>
+                            <input class="form-control" type="text" id="stop" name="stop"  value="."><br><br>
                         </div>
                         <div class="container d-flex flex-wrap justify-content-end">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input class="btn btn-primary" type="submit" value="Generate response">
                         </div>
-                    </form>
+                        </form>
 
                     <!--If a response is received from the open-ai-api display the response-->
                     {% if response %}
-                    <div class="jumbotron">
-                        <h1>Response</h1>
-                        <p>{{response}}</p>
+                    <div class="container-fluid py-5">
+                        <h2 class="text-body-emphasis">Response</h2>
+                        <textarea class="form-control" rows="10">{{ response }}</textarea>
                     </div>
                     {% endif %}
 

@@ -10,17 +10,68 @@
 
 ## Overview 📖
 
-TalkWave is an AI chatbot for developers written in Python. It features a simple HTML frontend and is designed to be accessible across various browsers and devices. TalkWave supports asynchronous operations and can handle multiple requests simultaneously.
+TalkWave is an AI chatbot for developers written in Python. It features
+a simple HTML frontend and is designed to be accessible across various
+browsers and devices. TalkWave supports asynchronous operations and can
+handle multiple requests simultaneously.
 
 ## Features ✨
 
-- Implements chat rate limiting to avoid overly frequent requests
-- Accurately limits billing with limits and ID binding
-- Self-maintaining model framework that supports any LLM model and any external API integration, abstracting and unifying access to GPT-3, GPT-3.5, and GPT-4
-- Intuitive design of the chat allows for cross-replying, retracing replies, trigger-based replies, and the use of stickers for added fun
-- Allows voice command for user inputs
-- Accessible design for cross-browser and device compatibility
-- Plain Python implementation with a limited number of dependencies
+- [x] Accepts a range of parameters to customize the response, such as max tokens, temperature, and stopping conditions.
+- [x] Accessible design for cross-browser and device compatibility (Chrome, Firefox, Safari, Edge, and mobile).
+- [x] Accurately limits billing with limits and ID binding to prevent exceeding API limits and incurring charges.
+- [x] Implements rate limiting functionality to prevent exceeding API limits and incurring charges.
+- [x] Plain Python implementation with a limited number of dependencies for easy installation and use.
+- [x] Stores responses in log files, JSON, and Markdown formats for easy analysis and sharing.
+- [x] Supports multiple GPT models for generating responses, including `gpt-3.5-turbo`,`text-davinci-002`,`text-curie-001`,`text-babbage-001`,`text-ada-001`.
+
+## Requirements 📋
+
+- Python 3.6 or higher
+- The `openai`, `tabulate`, and `python-dotenv` packages
+- An OpenAI API key (get one [here](https://openai.com/))
+
+## Installation 🛠
+
+1. Install the required packages:
+
+```bash
+pip install openai tabulate python-dotenv
+```
+
+1. Clone the TalkWave repository:
+
+```bash
+git clone https://github.com/yourusername/talkwave.git
+```
+
+1. Add your OpenAI API key to a `.env` file in the project directory:
+
+```bash
+OPENAI_API_KEY="your_api_key_here"
+```
+
+## Usage 🚀
+
+To use TalkWave, navigate to the project directory in your terminal and
+run the following command:
+
+```bash
+python talkwave -p "Your prompt here"
+```
+
+You can also specify additional options, such as the GPT model, maximum
+tokens, temperature, and user ID:
+
+```bash
+python talkwave -m 1 -p "Tell me a joke" -t 50 -T 0.5 -u "test@test.com" -r 5 -s "."
+```
+
+For more information on the available options, run:
+
+```bash
+python talkwave --help
+```
 
 ## File Structure 📁
 
@@ -28,48 +79,10 @@ TalkWave is an AI chatbot for developers written in Python. It features a simple
 
 ```
 
-## Installation 🛠
+## License 📜
 
-1. Clone the repository:
+The project is licensed under the terms of both the MIT license and the
+Apache License (Version 2.0).
 
-```bash
-git clone https://github.com/your-username/talkwave.git
-```
-
-1. Change into the project directory:
-
-```bash
-cd talkwave
-```
-
-1. Install the dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-1. Create a `.env` file in the root directory and add the following environment variables:
-
-```bash
-echo "API_KEY=your_api_key" > .env
-echo "API_URL=your_api_url" >> .env
-```
-
-1. Run the application:
-
-```bash
-python app/main.py
-```
-
-1. Open the application in your browser:
-
-```bash
-http://localhost:8000
-```
-
-## License
-
-Copyright © 2023 WiserOne. All rights reserved.
-SPDX-License-Identifier: Apache-2.0 OR MIT
-
-This README file provides an overview of the TalkWave project, its features, installation instructions, and licensing information. Update the repository URL in the "Installation" section to match your GitHub repository.
+- [Apache License, Version 2.0](https://opensource.org/license/apache-2-0/)
+- [MIT license](https://opensource.org/licenses/MIT)
