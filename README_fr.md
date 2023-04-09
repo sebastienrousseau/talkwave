@@ -59,7 +59,7 @@ python talkwave -p "Votre prompt ici"
 Vous pouvez également spécifier des options supplémentaires, telles que le modèle GPT, le nombre maximal de jetons, la température et l'ID utilisateur:
 
 ```bash
-python talkwave -m 1 -p "Dis-moi une blague" -t 50 -T 0.5 -u "test@test.com" -r 5 -s "."
+python talkwave -m 1 -p "Dis-moi une blague" -t 50 -T 0.5 -u "test@test.com" -r 5 -s -o "json"
 ```
 
 Pour plus d'informations sur les options disponibles, exécutez:

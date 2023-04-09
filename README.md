@@ -64,7 +64,8 @@ You can also specify additional options, such as the GPT model, maximum
 tokens, temperature, and user ID:
 
 ```bash
-python talkwave -m 1 -p "Tell me a joke" -t 50 -T 0.5 -u "test@test.com" -r 5 -s "."
+python talkwave -m 1 -p "Tell me a joke" -t 50 -T 0.5 -u "test@test.com" -r 5 -s -o "json"
+
 ```
 
 For more information on the available options, run:

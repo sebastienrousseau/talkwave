@@ -58,49 +58,58 @@ def write_response_to_log_file(response, prompt, dir_path: str):
         print(e)
 
 
-# Function Name: write_to_json_file
+# Function Name: write_response_to_file
 '''
-Write the response to a JSON file.
+Write the response to a file.
 '''
 
 
-def write_to_json_file(response):
+def write_response_to_file(response, prompt, file_format, timestamp):
     """
-    Write the response to a JSON file.
-    """
-    if dir_path is None:
-        print("Error: Directory path is not provided.")
-        return
-
-    with open(
-        set_data_directory(dir_path)+'/{}_log.json'.format(timestamp),
-        'a'
-    ) as f:
-        json.dump(response, f)
-
-
-# Function Name: write_to_markdown_file
-'''
-Write the response to a Markdown file
-'''
-
-
-def write_to_markdown_file(response, prompt):
-    """
-    Write the response to a Markdown file
+    Write the response to a file of the specified format.
     """
     if dir_path is None:
         print("Error: Directory path is not provided.")
         return
 
-    with open(
-        set_data_directory(dir_path)+'/{}_log.md'.format(timestamp),
-        'a'
-    ) as f:
-        f.write(f"# TalkWave 🐍 (v0.0.1)\n\n")
-        f.write(f"## {timestamp}\n\n")
-        f.write(f"```bash\n{prompt}\n```\n\n")
-        f.write(f"```bash\n{response}\n```\n")
+    if file_format == "json":
+        with open(
+            set_data_directory(dir_path)+'/{}_log.json'.format(timestamp),
+            'a'
+        ) as f:
+            json.dump(response, f)
+    elif file_format == "markdown" or file_format == "md":
+        with open(
+            set_data_directory(dir_path)+'/{}_log.md'.format(timestamp),
+            'a'
+        ) as f:
+            f.write(f"# TalkWave 🐍 (v0.0.1)\n\n")
+            f.write(f"## {timestamp}\n\n")
+            f.write(f"```bash\n{prompt}\n```\n\n")
+            f.write(f"```bash\n{response}\n```\n")
+    elif file_format == "csv" or file_format == "xls":
+        with open(
+            set_data_directory(dir_path)+'/{}_log.csv'.format(timestamp),
+            'a'
+        ) as f:
+            f.write(f"{timestamp}|{prompt}|{response}\n")
+            f.close()
+    elif file_format == "html":
+        with open(
+            set_data_directory(dir_path)+'/{}_log.html'.format(timestamp),
+            'a'
+        ) as f:
+            f.write(f"{timestamp}|{prompt}|{response}\n")
+            f.close()
+    elif file_format == "txt" or file_format == "text":
+        with open(
+            set_data_directory(dir_path)+'/{}_log.txt'.format(timestamp),
+            'a'
+        ) as f:
+            f.write(f"{timestamp}|{prompt}|{response}\n")
+            f.close()
+    else:
+        print("Error: Invalid file format.")
 
 
 # Function Name: main
@@ -117,6 +126,7 @@ def main(
     user_id: int,
     rate_limit_seconds: int,
     stop: str,
+    output_format: str
 ):
     """
     Main function to interact with the OpenAI API using the given parameters.
@@ -158,9 +168,9 @@ def main(
     if 'choices' in json_resp:
         assistant_reply = json_resp['choices'][0]['message']['content'].strip()
         print(assistant_reply)
-        write_response_to_log_file(json_resp, prompt, dir_path)
-        write_to_json_file(json_resp)
-        write_to_markdown_file(assistant_reply, prompt)
+
+        write_response_to_file(json_resp, prompt, output_format, timestamp)
+        write_response_to_log_file(json_resp, prompt, timestamp)
 
         return assistant_reply
 
