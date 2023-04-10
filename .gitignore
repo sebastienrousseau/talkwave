@@ -112,4 +112,3 @@ ENV/
 # Talkwave data
 /talkwave/data
 .env
-openai-key.env
