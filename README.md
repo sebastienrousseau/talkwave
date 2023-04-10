@@ -98,8 +98,8 @@ python talkwave --help
 ├── README.md
 ├── README_fr.md
 ├── TEMPLATE.md
-├── openai-key.env
 ├── pylintrc
+├── pyproject.toml
 ├── requirements.txt
 ├── setup.cfg
 └── setup.py
