@@ -70,7 +70,7 @@ setup(
         'Operating System :: Unix',
     ],
 
-    keywords='talkwave, bot, developer, virtual, python, openai, gpt3, gpt-3, gpt, 3',
+    keywords='talkwave, chatbot, artificial intelligence, machine learning, natural language processing, natural language processing, OpenAI, GPT-3, GPT3, GPT, 3, python',
 
     packages=['talkwave'],
 

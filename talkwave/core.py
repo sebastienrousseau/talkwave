@@ -20,7 +20,7 @@
 # set the timeout for the API call to a string value from an environment
 # variable "TIMEOUT" (required).
 from datetime import datetime
-from utils.curl import request
+from utils.curl import send_request
 from utils.dir import set_data_directory
 import dotenv
 import json
@@ -44,18 +44,15 @@ Write the response to a log file.
 '''
 
 
-def write_response_to_log_file(response, prompt, dir_path: str):
+def write_response_to_log_file(response, prompt, timestamp):
     """
     Write the response and prompt to a log file.
     """
-    try:
-        directory = set_data_directory(dir_path)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        with open(directory + '/log.txt', 'a') as f:
-            f.write(f"{timestamp}|{prompt}|{response}\n")
-    except ValueError as e:
-        print(e)
+    if dir_path is None:
+        print("Error: Directory path is not provided.")
+        return
+    with open(dir_path + '/log.txt', 'a') as f:
+        f.write(f"{timestamp}|{prompt}|{response}\n")
 
 
 # Function Name: write_response_to_file
@@ -123,7 +120,7 @@ def main(
     prompt: str,
     max_tokens: int,
     temperature: float,
-    user_id: int,
+    user_id: str,
     rate_limit_seconds: int,
     stop: str,
     output_format: str
@@ -154,7 +151,7 @@ def main(
         print("Invalid model")
         sys.exit()
 
-    json_resp = request(
+    json_resp = send_request(
         key,
         model_str,
         prompt,

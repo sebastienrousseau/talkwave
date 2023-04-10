@@ -63,6 +63,9 @@ def index():
         stop = str(
             request.form.get('stop', None)
         )
+        output_format = str(
+            request.form.get('output_format', 'json')
+        )
 
         response = main(
             model,
@@ -71,7 +74,8 @@ def index():
             temperature,
             user_id,
             rate_limit_seconds,
-            stop
+            stop,
+            output_format
         )
         return render_template('index.html', response=response)
     else:

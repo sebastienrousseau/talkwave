@@ -30,10 +30,11 @@ timeout = 10
 # make the API call and sets a timeout for the request to prevent the
 # function from hanging indefinitely in case of an error.
 
+
 last_request_timestamps = {}
 
 
-def request(
+def send_request(
     api_key,
     model,
     prompt,
@@ -41,27 +42,15 @@ def request(
     temperature,
     user_id,
     rate_limit_seconds,
-    stop
+    stop,
 ):
-    global last_request_timestamps
-
-    # Check that the user ID is valid
     if not user_id:
         raise ValueError("User ID must be provided")
 
-    # Check that the rate limit period is greater than 0
     if rate_limit_seconds <= 0:
         raise ValueError("Rate limit period must be greater than 0")
 
-    # Get the last timestamp for this user, or set to 0 if it doesn't exist
-    last_timestamp = last_request_timestamps.get(user_id, 0)
-
-    # If rate limiting is enabled and the time since the last request is less
-    # than the rate limit, sleep for the remaining time
-    if rate_limit_seconds and time.time() - last_timestamp < rate_limit_seconds:
-        time_to_sleep = rate_limit_seconds - (time.time() - last_timestamp)
-        if time_to_sleep > 0:
-            time.sleep(time_to_sleep)
+    wait_if_rate_limited(user_id, rate_limit_seconds)
 
     headers = {
         'Content-Type': 'application/json',
@@ -82,23 +71,12 @@ def request(
         'https://api.openai.com/v1/chat/completions',
         headers=headers,
         json=data,
-        timeout=timeout,
     )
 
-    # Update the last request timestamp for this user
     last_request_timestamps[user_id] = time.time()
 
-    # Check if the response was successful
-    if response.status_code != 200:
-        raise Exception(
-            f'Request to OpenAI API failed with status code {response.status_code}.'
-        )
+    check_response_for_errors(response)
 
-    # Check if the response contains any errors
-    if 'error' in response.json():
-        raise Exception(response.json()['error'])
-
-    # If the "stop" parameter is True, raise an exception to stop the program
     if stop:
         response_json = response.json()
         if 'choices' in response_json and response_json['choices']:
@@ -106,6 +84,23 @@ def request(
                 if 'text' in choice and stop in choice['text'].lower():
                     raise StopIteration('Received "stop" message from AI')
 
-    # print(response.json())
-
     return response.json()
+
+
+def wait_if_rate_limited(user_id, rate_limit_seconds):
+    last_timestamp = last_request_timestamps.get(user_id, 0)
+
+    if rate_limit_seconds and time.time() - last_timestamp < rate_limit_seconds:
+        time_to_sleep = rate_limit_seconds - (time.time() - last_timestamp)
+        if time_to_sleep > 0:
+            time.sleep(time_to_sleep)
+
+
+def check_response_for_errors(response):
+    if response.status_code != 200:
+        raise Exception(
+            f'Request to OpenAI API failed with status code {response.status_code}.'
+        )
+
+    if 'error' in response.json():
+        raise Exception(response.json()['error'])
