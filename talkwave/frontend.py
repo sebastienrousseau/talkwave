@@ -17,7 +17,7 @@
 
 from flask import render_template, request
 import flask
-from core import main
+from talkwave.core import main
 
 # Initialize a Flask app instance
 app = flask.Flask(__name__)

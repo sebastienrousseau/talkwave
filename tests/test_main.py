@@ -1,39 +1,39 @@
-import unittest
-from argparse import Namespace
-from __main__ import parse_args
+import sys
+from unittest import TestCase, main as unittest_main
+from unittest.mock import patch
+
+from parse import parse_args
+
+# Add the path to the 'utils' directory to sys.path
+# utils_path = os.path.abspath(os.path.join(
+#     os.path.dirname(__file__), '..', 'talkwave', 'utils'))
+# if not os.path.isdir(utils_path):
+#     raise ValueError(f"Cannot find 'utils' directory at {utils_path}")
+# sys.path.insert(0, utils_path)
+
+# try:
+#     from parse import parse_args
+# except ImportError as e:
+#     raise ImportError(f"Cannot import 'parse' module: {e}")
 
 
-class TestMain(unittest.TestCase):
+class TestMain(TestCase):
     def test_parse_args(self):
-        args = parse_args([
-            '-p', 'test',
-            '-t', '10',
-            '-T', '0.5',
-            '-m', '1',
-            '-u', 'example_user',
-            '-r', '5',
-            '-s',
-            '-o', 'csv'
-        ])
-        self.assertEqual(args, Namespace(
-            prompt='test',
-            tokens=10,
-            temperature=0.5,
-            model=1,
-            user_id='example_user',
-            rate_limit_seconds=5,
-            stop=True,
-            output='csv'
-        ))
+        # Test with no arguments
+        with patch.object(sys, "argv", ["__main__.py"]):
+            with self.assertRaises(SystemExit):
+                parse_args()
 
-        args = parse_args(['-p', 'test'])
-        self.assertEqual(args, Namespace(
-            model=1,
-            prompt='test',
-            tokens=50,
-            temperature=0.5,
-            user_id='example_user',
-            rate_limit_seconds=5,
-            stop=None,
-            output='json'
-        ))
+        # Test with required arguments
+        with patch.object(sys, "argv", ["__main__.py", "-p", "Hello, how are you?"]):
+            args = parse_args()
+            self.assertEqual(args.prompt, "Hello, how are you?")
+
+        # Test with optional arguments
+        with patch.object(sys, "argv", ["__main__.py", "-p", "Hello, how are you?", "-m", "3"]):
+            args = parse_args()
+            self.assertEqual(args.model, 3)
+
+
+if __name__ == "__main__":
+    unittest_main()

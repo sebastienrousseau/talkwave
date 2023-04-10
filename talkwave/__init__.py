@@ -12,7 +12,6 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
 
 # TalkWave
@@ -89,6 +88,8 @@ Apache License (Version 2.0).
 - [MIT license](https://opensource.org/licenses/MIT)
 
 """
+
+"""The Python talkwave module."""
+__all__ = ["__version__"]
+
 __version__ = "0.0.1"
-__author__ = "Sebastien Rousseau"
-__email__ = "sebastian.rousseau at gmail.com"
