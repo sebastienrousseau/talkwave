@@ -48,7 +48,7 @@ setup(
     long_description_content_type='text/markdown',
     url=URL,
     author='Sebastien Rousseau',
-    author_email='sebastian.rousseau AT gmail.com',
+    author_email='sebastian.rousseau@gmail.com',
     license='Apache License 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
