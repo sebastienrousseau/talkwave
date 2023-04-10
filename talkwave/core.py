@@ -27,6 +27,8 @@ import json
 import os
 import sys
 
+VERSION = '0.0.1'
+
 # set the timeout for the API call to a string value from an environment
 timeout = os.environ.get('TIMEOUT', '90')
 
@@ -80,7 +82,7 @@ def write_response_to_file(response, prompt, file_format, timestamp):
             set_data_directory(dir_path)+'/{}_log.md'.format(timestamp),
             'a'
         ) as f:
-            f.write(f"# TalkWave 🐍 (v0.0.1)\n\n")
+            f.write(f"# TalkWave 🐍 (v{VERSION})\n\n")
             f.write(f"## {timestamp}\n\n")
             f.write(f"```bash\n{prompt}\n```\n\n")
             f.write(f"```bash\n{response}\n```\n")
@@ -132,17 +134,10 @@ def main(
     key = dotenv.get_key('.env', 'OPENAI_API_KEY')
 
     model_dict = {
-        # GPT-4 - Most capable GPT-4 model and optimized for chat at 1/10th the cost of text-davinci-003.
-        # 0: "gpt-4",
-        # GPT-3.5 Turbo - Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003.
         1: "gpt-3.5-turbo",
-        # Davinci - Most capable GPT-3 model. Can do any task the other models can do, often with higher quality.
         2: "text-davinci-002",
-        # Curie - Very capable, faster and lower cost than Davinci.
         3: "text-curie-001",
-        # Babbage - Capable of straightforward tasks, very fast, and lower cost.
         4: "text-babbage-001",
-        # Ada - Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.
         5: "text-ada-001"
     }
 

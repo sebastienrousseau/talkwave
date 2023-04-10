@@ -20,17 +20,24 @@ from parse import parse_args
 class TestMain(TestCase):
     def test_parse_args(self):
         # Test with no arguments
-        with patch.object(sys, "argv", ["__main__.py"]):
+        with patch.object(
+            sys, "argv", ["__main__.py"]
+        ):
             with self.assertRaises(SystemExit):
                 parse_args()
 
         # Test with required arguments
-        with patch.object(sys, "argv", ["__main__.py", "-p", "Hello, how are you?"]):
+        with patch.object(
+            sys, "argv", ["__main__.py", "-p", "Hello, how are you?"]
+        ):
             args = parse_args()
             self.assertEqual(args.prompt, "Hello, how are you?")
 
         # Test with optional arguments
-        with patch.object(sys, "argv", ["__main__.py", "-p", "Hello, how are you?", "-m", "3"]):
+        with patch.object(
+            sys, "argv", ["__main__.py", "-p",
+                          "Hello, how are you?", "-m", "3"]
+        ):
             args = parse_args()
             self.assertEqual(args.model, 3)
 

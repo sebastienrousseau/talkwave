@@ -71,6 +71,7 @@ def send_request(
         'https://api.openai.com/v1/chat/completions',
         headers=headers,
         json=data,
+        timeout=timeout
     )
 
     last_request_timestamps[user_id] = time.time()
@@ -90,8 +91,10 @@ def send_request(
 def wait_if_rate_limited(user_id, rate_limit_seconds):
     last_timestamp = last_request_timestamps.get(user_id, 0)
 
-    if rate_limit_seconds and time.time() - last_timestamp < rate_limit_seconds:
-        time_to_sleep = rate_limit_seconds - (time.time() - last_timestamp)
+    if rate_limit_seconds and time.time(
+    ) - last_timestamp < rate_limit_seconds:
+        time_to_sleep = rate_limit_seconds - (
+            time.time() - last_timestamp)
         if time_to_sleep > 0:
             time.sleep(time_to_sleep)
 
@@ -99,7 +102,8 @@ def wait_if_rate_limited(user_id, rate_limit_seconds):
 def check_response_for_errors(response):
     if response.status_code != 200:
         raise Exception(
-            f'Request to OpenAI API failed with status code {response.status_code}.'
+            f'Request to OpenAI API failed with status code '
+            f'{response.status_code}.'
         )
 
     if 'error' in response.json():

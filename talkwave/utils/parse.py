@@ -5,7 +5,11 @@ import sys
 def parse_args():
     # Set up the command-line argument parser
     parser = argparse.ArgumentParser(
-        description="When invoked without arguments, talkwave displays the help menu. Otherwise, depending on the options specified, talkwave will return a response or print it in a user-defined way."
+        description="""
+When invoked without arguments, talkwave displays the help menu.
+Otherwise, depending on the options specified, talkwave will return a
+response or print it in a user-defined way.
+"""
     )
 
     parser.add_argument(
@@ -68,7 +72,10 @@ def parse_args():
         "-s",
         "--stop",
         action='store_true',
-        help="If set, a stop sequence will be added to the request. (Default: False)"
+        help="""
+            If set, a stop sequence will be added to the request.
+            (Default: False)
+        """
     )
 
     parser.add_argument(

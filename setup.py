@@ -19,7 +19,9 @@ from setuptools import setup
 with open('README.md', 'r') as fh:
     LONG_DESCRIPTION = fh.read().strip()
 
-SHORT_DESCRIPTION = "TalkWave is an AI chatbot for developers written in Python."
+SHORT_DESCRIPTION = (
+    "TalkWave is an AI chatbot for developers written in Python."
+)
 
 DEPENDENCIES = [
     'Flask==2.2.3',
@@ -46,7 +48,7 @@ setup(
     long_description_content_type='text/markdown',
     url=URL,
     author='Sebastien Rousseau',
-    author_email='sebastian.rousseau@gmail.com',
+    author_email='sebastian.rousseau AT gmail.com',
     license='Apache License 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -61,7 +63,11 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Operating System :: OS Independent',
     ],
-    keywords='talkwave chatbot AI machine learning natural language processing OpenAI GPT-3 GPT3 GPT python',
+    keywords=(
+        'talkwave, chatbot, AI, machine learning'
+        'natural language processing '
+        'OpenAI GPT-3 GPT3 GPT python'
+    ),
     packages=['talkwave'],
     install_requires=DEPENDENCIES,
     tests_require=TEST_DEPENDENCIES,
