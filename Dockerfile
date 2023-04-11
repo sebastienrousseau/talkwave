@@ -26,7 +26,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the dependencies with a specific version tag
-RUN pip install --no-cache-dir -r requirements.txt==0.0.3
+RUN pip install --no-cache-dir -r requirements.txt==0.0.4
 
 # Copy the rest of the application code into the container
 COPY . .

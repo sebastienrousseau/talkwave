@@ -63,7 +63,7 @@ text = ["csv", "xls", "html", "txt", "text",
 database = ["db", "sqlite", "sqlite3", "db3", "s3db", "sl3"]
 markdown = ["md", "markdown"]
 html = ["html", "htm"]
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 
 
 def write_response_to_file(

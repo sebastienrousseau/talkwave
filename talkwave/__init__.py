@@ -99,4 +99,4 @@ Apache License (Version 2.0).
 """The Python talkwave module."""
 __all__ = ["__version__"]
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
