@@ -82,7 +82,21 @@ response or print it in a user-defined way.
         "-o",
         "--output",
         type=str,
-        choices=['csv', 'html', 'json', 'markdown', 'md', 'text', 'txt'],
+        choices=[
+            'csv',
+            'db',
+            'db3',
+            'html',
+            'json',
+            'markdown',
+            'md',
+            's3db',
+            'sl3',
+            'sqlite',
+            'sqlite3',
+            'text',
+            'txt'
+        ],
         default='json',
         help="The output format for the response. (Default: json)"
     )

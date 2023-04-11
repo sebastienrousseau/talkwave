@@ -77,7 +77,11 @@ def index():
             stop,
             output_format
         )
-        return render_template('index.html', response=response, prompt=request.form['prompt'])
+        return render_template(
+            'index.html',
+            response=response,
+            prompt=request.form['prompt']
+        )
     else:
         return render_template('index.html')
 

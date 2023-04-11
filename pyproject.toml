@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "talkwave"
-version = "0.0.2"
+version = "0.0.3"
 description = "TalkWave is an AI chatbot for developers written in Python."
 authors = ["Sebastien Rousseau <sebastian.rousseau at gmail.com>"]
 license = "Apache Software License"

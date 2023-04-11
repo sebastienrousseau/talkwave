@@ -15,27 +15,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 # '
-# set the timeout for the API call to a string value from an environment
-# variable "TIMEOUT" (required).
 from datetime import datetime
 from utils.curl import send_request
-from utils.dir import set_data_directory
 import dotenv
 import json
 import os
 import sys
-
-VERSION = '0.0.2'
+import sqlite3
 
 # set the timeout for the API call to a string value from an environment
 timeout = os.environ.get('TIMEOUT', '90')
 
 # set the directory where the data is stored, value is a string from an
-# environment variable "DIR_PATH" (required).
-dir_path = os.path.join(os.path.dirname(os.path.realpath(
-    __file__)), os.environ.get('DIR_PATH', 'data'))
+# environment variable "DATA_DIR" (required).
+data_dir = os.path.join(os.path.dirname(os.path.realpath(
+    __file__)), os.environ.get('DATA_DIR', 'data'))
 
 # set the timestamp for the API call in ISO
 timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -50,10 +45,10 @@ def write_response_to_log_file(response, prompt, timestamp):
     """
     Write the response and prompt to a log file.
     """
-    if dir_path is None:
+    if data_dir is None:
         print("Error: Directory path is not provided.")
         return
-    with open(dir_path + '/log.txt', 'a') as f:
+    with open(data_dir + '/log.txt', 'a') as f:
         f.write(f"{timestamp}|{prompt}|{response}\n")
 
 
@@ -62,58 +57,177 @@ def write_response_to_log_file(response, prompt, timestamp):
 Write the response to a file.
 '''
 
+# List of valid file formats for text files
+text = ["csv", "xls", "html", "txt", "text",
+        "log", "json", "xml", "yaml", "yml"]
+database = ["db", "sqlite", "sqlite3", "db3", "s3db", "sl3"]
+markdown = ["md", "markdown"]
+html = ["html", "htm"]
+VERSION = '0.0.3'
 
-def write_response_to_file(response, prompt, file_format, timestamp):
+
+def write_response_to_file(
+    response,
+    prompt,
+    file_format,
+    timestamp,
+    data_dir=data_dir
+):
     """
     Write the response to a file of the specified format.
     """
-    if dir_path is None:
+    if data_dir is None:
         print("Error: Directory path is not provided.")
         return
 
     if file_format == "json":
         with open(
-            set_data_directory(dir_path)+'/{}_log.json'.format(timestamp),
-            'a'
+            os.path.join(data_dir, f"{timestamp}_log.json"),
+            "a"
         ) as f:
             json.dump(response, f)
-    elif file_format == "markdown" or file_format == "md":
+    elif file_format == "html":
+        with open(os.path.join(data_dir, "log.html"), "a") as f:
+            if os.stat(os.path.join(data_dir, "log.html")).st_size == 0:
+
+                f.write("<!DOCTYPE html>\n")
+                f.write("""
+<html lang=\"en\" itemscope itemtype=\"http://schema.org/WebPage\">\n
+""")
+                f.write("<head>\n")
+                f.write("  <meta charset=\"utf-8\">\n")
+                f.write("""
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n
+""")
+                f.write("""
+<meta name=\"theme-color\" content=\"#e82440\"/>\n
+""")
+                f.write("""
+<link rel=\"stylesheet\"
+      href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\"
+      integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\"
+      crossorigin=\"anonymous\" />\n""")
+                f.write(
+                    """
+                        <style>
+                            .wrap-code {
+                                white-space: pre-wrap;
+                                word-wrap: break-word;
+                            }
+                        </style>\n
+                    """)
+                f.write("<title>TalkWave 🐍 Log Analysis</title>\n")
+                f.write("</head>\n")
+                f.write("<body>\n")
+                f.write(
+                    """
+<header class=\"bd-header bg-dark py-3 d-flex align-items-stretch
+border-bottom border-dark\">""")
+                f.write("""
+<div class=\"container-fluid d-flex align-items-center\">
+""")
+                f.write(
+                    """
+<h1 class=\"d-flex align-items-center fs-4 text-white mb-0\">
+""")
+                f.write("""
+<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/
+main/assets/talkwave/icon/ico-talkwave.svg\"
+width=\"33\"
+height=\"33\"
+class=\"me-3\" alt=\"TalkWave\" />TalkWave</h1>""")
+                f.write("</div>")
+                f.write("""
+<div class=\"container d-flex flex-wrap justify-content-end\">
+""")
+                f.write("</div>")
+                f.write("</header>")
+                f.write("  <main>\n")
+                f.write("    <div class=\"container-fluid py-3\">\n")
+
+            # Loop over each response and write the prompt and response
+            # to the HTML file
+            for i in range(len(response["choices"])):
+                # Parse the timestamp string into a datetime object
+                dt = datetime.fromisoformat(
+                    timestamp.replace("Z", "+00:00")
+                )
+
+                # Format the datetime object into a more readable string
+                formatted_timestamp = dt.strftime("%Y-%m-%d %H:%M:%S")
+
+                f.write(
+                    f"<p><strong><time>"
+                    f"{formatted_timestamp}</time></strong></p>\n"
+                )
+                f.write("<ul>\n")
+                f.write(
+                    f"""
+<li>
+    <strong>Prompt:</strong>
+    <pre class=\"wrap-code\"><code>{prompt}</code></pre></li>\n""")
+                f.write(
+                    f"""
+<li><strong>Response:</strong>
+<pre class=\"wrap-code\">
+<code>{response['choices'][i]['message']['content']}</code>
+</pre></li>\n""")
+                f.write("</ul>\n")
+                f.write("    <hr />\n")
+
+            if os.stat(os.path.join(data_dir, "log.html")).st_size >= 1:
+                f.write("    </div>\n")
+                f.write("  </main>\n")
+                f.write("</body>\n")
+                f.write("</html>\n")
+    elif file_format in markdown:
         with open(
-            set_data_directory(dir_path)+'/{}_log.md'.format(timestamp),
-            'a'
+            os.path.join(data_dir, f"{timestamp}_log.md"),
+            "a"
         ) as f:
             f.write(f"# TalkWave 🐍 (v{VERSION})\n\n")
             f.write(f"## {timestamp}\n\n")
             f.write(f"```bash\n{prompt}\n```\n\n")
             f.write(f"```bash\n{response}\n```\n")
-    elif file_format == "csv" or file_format == "xls":
+    elif file_format in text:
+        # elif file_format in ["csv", "xls", "html", "txt", "text"]:
         with open(
-            set_data_directory(dir_path)+'/{}_log.csv'.format(timestamp),
-            'a'
+            os.path.join(data_dir, f"{timestamp}_log.{file_format}"),
+            "a"
         ) as f:
             f.write(f"{timestamp}|{prompt}|{response}\n")
-            f.close()
-    elif file_format == "html":
-        with open(
-            set_data_directory(dir_path)+'/{}_log.html'.format(timestamp),
-            'a'
-        ) as f:
-            f.write(f"{timestamp}|{prompt}|{response}\n")
-            f.close()
-    elif file_format == "txt" or file_format == "text":
-        with open(
-            set_data_directory(dir_path)+'/{}_log.txt'.format(timestamp),
-            'a'
-        ) as f:
-            f.write(f"{timestamp}|{prompt}|{response}\n")
-            f.close()
+    elif file_format in database:
+        # set the path to the database file
+        db_path = os.path.join(data_dir, f"log.{file_format}")
+        # create a new database file if it doesn't exist
+        if not os.path.exists(db_path):
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+            c.execute(
+                "CREATE TABLE responses (timestamp TEXT, prompt TEXT, "
+                "response TEXT)"
+            )
+            conn.commit()
+            conn.close()
+        # insert the response into the database
+        conn = sqlite3.connect(db_path)
+        c = conn.cursor()
+        c.execute(
+            "INSERT INTO responses (timestamp, prompt, response) "
+            "VALUES (?, ?, ?)",
+            (timestamp, prompt, json.dumps(response))
+        )
+        conn.commit()
+        conn.close()
     else:
         print("Error: Invalid file format.")
+        return
 
 
 # Function Name: main
 '''
-Main function to interact with the OpenAI API using the given parameters.
+Main function to interact with the OpenAI API using the given
+parameters.
 '''
 
 
@@ -128,7 +242,8 @@ def main(
     output_format: str
 ):
     """
-    Main function to interact with the OpenAI API using the given parameters.
+    Main function to interact with the OpenAI API using the given
+    parameters.
     """
     dotenv.load_dotenv()
     key = dotenv.get_key('.env', 'OPENAI_API_KEY')
