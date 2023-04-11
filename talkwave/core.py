@@ -27,7 +27,7 @@ import json
 import os
 import sys
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 # set the timeout for the API call to a string value from an environment
 timeout = os.environ.get('TIMEOUT', '90')

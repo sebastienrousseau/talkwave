@@ -36,7 +36,7 @@ dir_path = os.path.join(os.path.dirname(os.path.realpath(
 
 if __name__ == "__main__":
     # Set the title and description of the program
-    title = "TalkWave 🐍 (v0.0.1)"
+    title = "TalkWave 🐍 (v0.0.2)"
     description = "An AI chatbot for developers"
 
     # Print the title and description of the program

@@ -37,7 +37,7 @@ TEST_DEPENDENCIES = [
     "pytest>=7.3.0",
 ]
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 URL = 'https://github.com/sebastienrousseau/talkwave'
 
 setup(

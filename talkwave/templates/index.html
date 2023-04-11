@@ -1,104 +1,278 @@
-<html lang="en" data-bs-theme="dark">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>TalkWave - An OpenAI Virtual Developer Bot</title>
-
-    <link rel="icon" href="../favicon.ico">
-    <meta name="theme-color" content="#e82440">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <!--Header-->
-    <header class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark">
-        <div class="container-fluid d-flex align-items-center">
-            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-white text-decoration-none" title="TalkWave">
-            <h1 class="d-flex align-items-center fs-4 text-white mb-0">
-            <img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/icon/ico-talkwave.svg" width="33" height="33" class="me-3" alt="TalkWave">
-            TalkWave
-            </h1>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>TalkWave - An OpenAI Virtual Developer Bot</title>
+      <link rel="icon" href="../favicon.ico" />
+      <meta name="theme-color" content="#e82440" />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+         crossorigin="anonymous"
+         />
+      <style>
+.wrap-code {
+    white-space: pre-wrap; /* Enables text wrapping */
+    word-wrap: break-word; /* Allows long words to break onto the next line */
+}
+</style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script
+         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+         crossorigin="anonymous"
+         ></script>
+   </head>
+   <body>
+      <!--Header-->
+      <header
+         class="bd-header bg-dark py-3 d-flex align-items-stretch border-bottom border-dark"
+         >
+         <div class="container-fluid d-flex align-items-center">
+            <a
+               href="/"
+               class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-white text-decoration-none"
+               title="TalkWave"
+               >
+               <h1 class="d-flex align-items-center fs-4 text-white mb-0">
+                  <img
+                     src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/icon/ico-talkwave.svg"
+                     width="33"
+                     height="33"
+                     class="me-3"
+                     alt="TalkWave"
+                     />
+                  TalkWave
+               </h1>
             </a>
-        </div>
-        <div class="container d-flex flex-wrap justify-content-end">
-         <nav class="d-flex align-items-center">
-            <a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/">Home</a>
-            <!-- a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/log">Log</a -->
-        </nav>
-      </div>
-    </header>
-
-    <!--Main-->
-    <main>
-        <div class="container-fluid py-5">
-            <section class="p-5 mb-4 container bg-light rounded-3">
-                <div class="py-5">
-                    <div class="col-lg-12">
-                        <h2 class="text-body-emphasis">TalkWave</h2>
-                        <img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/title/title-talkwave.svg" class="py-5" style=" width: 100%; max-width: 900px" alt="TalkWave">
-                        <p class="col-md-12 fs-4">TalkWave is an artificial intelligence virtual developer bot that assists you in your software development process. It interacts with you through natural language processing and provides you with the information, ideas, and resources you need to complete your project faster and easier.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="container py-4">
-                <!--Form-->
-                    <!--Create a POST request that posts to this webpage the required fields of 'prompt','temperature','model','max-token'-->
-                    <form action="/" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label" for="prompt">Enter your prompt:</label>
-                            <input class="form-control" type="text" id="prompt" name="prompt" required><br><br>
+         </div>
+         <div class="container d-flex flex-wrap justify-content-end">
+            <nav class="d-flex align-items-center">
+               <a
+                  class="me-2 text-white align-items-center mb-0 text-decoration-none"
+                  href="/"
+                  >Home</a
+                  >
+               <!-- a class="me-2 text-white align-items-center mb-0 text-decoration-none" href="/log">Log</a -->
+            </nav>
+         </div>
+      </header>
+      <!--Main-->
+      <main>
+         <div class="container-fluid py-5">
+         <section class="p-5 mb-4 container bg-light text-dark rounded-3">
+            <div class="py-5">
+               <div class="col-lg-12">
+                  <h2 class="text-body-emphasis">Get the help you need.</h2>
+                  <em>Ask TalkWave anything about software development.</em>
+                  <img
+                     src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/title/title-talkwave.svg"
+                     class="py-5"
+                     style="width: 100%; max-width: 900px"
+                     alt="TalkWave"
+                     />
+                  <p class="col-md-12 fs-4">
+                     TalkWave is an artificial intelligence virtual developer bot
+                     that assists you in your software development process. It
+                     interacts with you through natural language processing and
+                     provides you with the information, ideas, and resources you need
+                     to complete your project faster and easier.
+                  </p>
+                  <div class="container d-flex flex-wrap justify-content-end">
+                     <a class="btn btn-primary" href="" title="Start chat"
+                        >Start chat</a
+                        >
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="p-5 mb-4 container bg-white rounded-3">
+            <div class="py-5">
+               <div class="col-lg-12">
+                  <h2 class="text-body-emphasis">New Chat</h2>
+                  <!--Form-->
+                  <!--Create a POST request that posts to this webpage the required fields of 'prompt','temperature','model','max-token'-->
+                  <form action="/" method="POST">
+                     <div class="mb-3">
+                        <label class="form-label" for="prompt">Enter your prompt:</label>
+                        <input
+                           class="form-control"
+                           type="text"
+                           id="prompt"
+                           name="prompt"
+                           placeholder="Enter a prompt here"
+                           required
+                           /><br /><br />
+                     </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="model">Select a model:</label>
+                        <select id="model" name="model">
+                           <option value="1">gpt-3.5-turbo</option>
+                           <option value="2">text-davinci-002</option>
+                           <option value="3">text-curie-001</option>
+                           <option value="4">text-babbage-001</option>
+                           <option value="5">text-ada-001</option>
+                        </select
+                           >
+                        <br /><br />
+                     </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="max_tokens"
+                           >Enter the maximum number of tokens:</label
+                           >
+                        <input
+                           class="form-control"
+                           type="number"
+                           id="max_tokens"
+                           name="max_tokens"
+                           value="50"
+                           min="1"
+                           max="2048"
+                           /><br /><br />
+                     </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="temperature"
+                           >Enter the temperature:</label
+                           >
+                        <input
+                           class="form-control"
+                           type="number"
+                           id="temperature"
+                           name="temperature"
+                           value="0.5"
+                           step="0.1"
+                           min="0.1"
+                           max="1.0"
+                           /><br /><br />
+                     </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="user_id">Enter the user ID:</label>
+                        <input
+                           class="form-control"
+                           type="text"
+                           id="user_id"
+                           name="user_id"
+                           value="example_user"
+                           /><br /><br />
+                     </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="stop"
+                           >Enter the stop sequence:</label
+                           >
+                        <input
+                           class="form-control"
+                           type="text"
+                           id="stop"
+                           name="stop"
+                           value="."
+                           /><br /><br />
+                     </div>
+                     <div class="container d-flex flex-wrap justify-content-end">
+                        <input
+                           class="btn btn-primary"
+                           type="submit"
+                           value="Generate response"
+                           />
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </section>
+         <section class="p-5 mb-4 container bg-white rounded-3">
+            <div class="py-5">
+            <div class="col-lg-12">
+            {% if response %}
+            <div class="container-fluid py-5">
+               <h2 class="text-body-emphasis">Chat messages</h2>
+               <div class="container-fluid">
+                  <div class="col-md-12 offset-md-12">
+                     <div class="d-flex flex-column">
+                        <div class="d-flex flex-row mb-4">
+                           <div class="p-2">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-person-circle"
+                                 viewBox="0 0 16 16"
+                                 >
+                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                 <path
+                                    fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                                    />
+                              </svg>
+                           </div>
+                           <div class="p-2 ml-3">
+                              <div
+                                 class="rounded py-2 px-3"
+                                 style="background-color: #f4f4f4"
+                                 >
+                                 <p class="m-0">{{ prompt }}</p>
+                              </div>
+                           </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="model">Select a model:</label>
-                            <select id="model" name="model">
-                                <option value="1">gpt-3.5-turbo</option>
-                                <option value="2">text-davinci-002</option>
-                                <option value="3">text-curie-001</option>
-                                <option value="4">text-babbage-001</option>
-                                <option value="5">text-ada-001</option>
-                            </select><br><br>
+                        <div class="d-flex flex-row-reverse">
+                           <div class="p-2">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-chat-dots"
+                                 viewBox="0 0 16 16"
+                                 >
+                                 <path
+                                    d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
+                                    />
+                                 <path
+                                    d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
+                                    />
+                              </svg>
+                           </div>
+                           <div class="p-2 mr-3">
+                              <div
+                                 class="rounded py-2 px-3"
+                                 style="background-color: #1f2937; color: #fff"
+                                 >
+                                 <pre class="wrap-code"><code>{{ response }}</code></pre>
+                              </div>
+                           </div>
                         </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         {% endif %}
+         <section class="p-5 mb-4 container rounded-3">
+            <div class="py-5">
+               <div class="col-lg-12">
+                  <!-- Add another form for continuing the conversation -->
+                  {% if response %}
+                  <div class="container-fluid py-5">
+                     <h2 class="text-body-emphasis">Continue the conversation</h2>
+                     <form action="/" method="POST">
                         <div class="mb-3">
-                            <label class="form-label" for="max_tokens">Enter the maximum number of tokens:</label>
-                            <input class="form-control" type="number" id="max_tokens" name="max_tokens" value="50" min="1" max="2048"><br><br>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="temperature">Enter the temperature:</label>
-                            <input class="form-control" type="number" id="temperature" name="temperature" value="0.5" step="0.1" min="0.1" max="1.0"><br><br>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="user_id">Enter the user ID:</label>
-                            <input class="form-control" type="text" id="user_id" name="user_id" value="example_user"><br><br>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="stop">Enter the stop sequence:</label>
-                            <input class="form-control" type="text" id="stop" name="stop"  value="."><br><br>
+                           <label class="form-label" for="prompt">Enter your prompt:</label>
+                           <input class="form-control" type="text" id="prompt" name="prompt" required><br><br>
                         </div>
                         <div class="container d-flex flex-wrap justify-content-end">
-                            <input class="btn btn-primary" type="submit" value="Generate response">
+                           <input class="btn btn-primary" type="submit" value="Send">
                         </div>
-                        </form>
-
-                    <!--If a response is received from the open-ai-api display the response-->
-                    {% if response %}
-                    <div class="container-fluid py-5">
-                        <h2 class="text-body-emphasis">Response</h2>
-                        <textarea class="form-control" rows="10">{{ response }}</textarea>
-                    </div>
-                    {% endif %}
-
-                <footer class="pt-3 mt-4 text-body-secondary border-top">
-                    Copyright &copy; TalkWave 2023. All rights reserved.
-                </footer>
-            </section>
-        </div>
-    </main>
-    </body>
+                     </form>
+                  </div>
+               </div>
+         </section>
+         {% endif %}
+         <footer class="pt-3 mt-4 text-body-secondary border-top">
+         Copyright &copy; TalkWave 2023. All rights reserved.
+         </footer>
+         </section>
+         </div>
+      </main>
+   </body>
 </html>

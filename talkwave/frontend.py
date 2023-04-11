@@ -17,7 +17,7 @@
 
 from flask import render_template, request
 import flask
-from talkwave.core import main
+from core import main
 
 # Initialize a Flask app instance
 app = flask.Flask(__name__)
@@ -77,7 +77,7 @@ def index():
             stop,
             output_format
         )
-        return render_template('index.html', response=response)
+        return render_template('index.html', response=response, prompt=request.form['prompt'])
     else:
         return render_template('index.html')
 
