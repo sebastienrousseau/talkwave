@@ -1,10 +1,6 @@
 import unittest
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
-import json
-from requests.models import Response
-from datetime import datetime, timedelta
-from time import sleep
 from requests.exceptions import Timeout
 
 from curl import send_request
@@ -133,8 +129,11 @@ class TestSendRequest(TestCase):
                 rate_limit_seconds,
                 stop
             )
+            self.assertEqual(response, None)
+            self.assertEqual(mock_post.call_count, 1)
 
     # test case for stop
+
     @patch('requests.post')
     def test_stop(self, mock_post):
         api_key = 'test_api_key'
@@ -146,7 +145,8 @@ class TestSendRequest(TestCase):
         rate_limit_seconds = 5
         stop = 'test_stop'
 
-        # First call to send_request should return a response without raising an exception
+        # First call to send_request should return a response without
+        # raising an exception
         mock_response = MagicMock()
         mock_response.status_code = 200
         mock_response.json.return_value = {
@@ -195,7 +195,8 @@ class TestSendRequest(TestCase):
         rate_limit_seconds = 5
         stop = None
 
-        # First call to send_request should return a response without raising an exception
+        # First call to send_request should return a response without
+        # raising an exception
         mock_response = MagicMock()
         mock_response.status_code = 200
         mock_response.json.return_value = {
