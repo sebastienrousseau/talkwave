@@ -15,19 +15,22 @@
 
 """
 Enables use of Python TalkWave as a "main" function (i.e.
-"python3 -m talkwave").
+"python3 talkwave").
 
 This allows using TalkWave with third-party libraries without modifying
 their code.
 """
-# '
 
 from core import main
+from parse import parse_args
 from tabulate import tabulate
-from utils.parse import parse_args
 import os
 import sys
-
+from __version__ import (
+    __description__,
+    __title__,
+    __version__,
+)
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DIR_PATH" (required).
@@ -36,11 +39,12 @@ dir_path = os.path.join(os.path.dirname(os.path.realpath(
 
 if __name__ == "__main__":
     # Set the title and description of the program
-    title = "TalkWave 🐍 (v0.0.4)"
-    description = "An AI chatbot for developers"
+    title = __title__ + " (v" + __version__ + ")"
+    description = __description__
 
     # Print the title and description of the program
-    title_table = tabulate([[title], [description]], tablefmt="rounded_grid")
+    title_table = tabulate([[title], [description]],
+                           tablefmt="rounded_grid")
     print()
     print(title_table)
     print()

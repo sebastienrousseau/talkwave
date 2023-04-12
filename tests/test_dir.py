@@ -1,14 +1,14 @@
 import os
 import unittest
 from unittest import TestCase
-from dir import set_data_directory
+from talkwave.dir import set_data_directory
 
 
 class TestDataDirectory(TestCase):
 
     # test case for setting the data directory
     def test_set_data_directory(self):
-        path = "/tests/test_data"
+        path = "/data"
         expected_location = os.path.join(os.path.dirname(__file__), path)
         actual_location = set_data_directory(path)
         self.assertEqual(actual_location, expected_location)
@@ -22,14 +22,14 @@ class TestDataDirectory(TestCase):
 
     # test case for setting the data directory to a file
     def test_set_data_directory_file(self):
-        path = "/tests/test_data/test_file.txt"
+        path = "/data/test_file.txt"
         expected_location = os.path.join(os.path.dirname(__file__), path)
         actual_location = set_data_directory(path)
         self.assertEqual(actual_location, expected_location)
 
     # test case for setting the data directory to a directory
     def test_set_data_directory_directory(self):
-        path = "/tests/test_data/test_directory"
+        path = "/data/test_directory"
         expected_location = os.path.join(os.path.dirname(__file__), path)
         actual_location = set_data_directory(path)
         self.assertEqual(actual_location, expected_location)

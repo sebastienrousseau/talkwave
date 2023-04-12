@@ -1,8 +1,7 @@
 import sys
 from unittest import TestCase, main as unittest_main
 from unittest.mock import patch
-
-from parse import parse_args
+from talkwave.parse import parse_args
 
 # Add the path to the 'utils' directory to sys.path
 # utils_path = os.path.abspath(os.path.join(

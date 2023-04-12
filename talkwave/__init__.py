@@ -17,18 +17,28 @@
 # TalkWave
 
 
-TalkWave is a Python package that provides an easy-to-use command-line
-interface for interacting with OpenAI's GPT-powered language models.
+TalkWave is an AI chatbot for developers written in Python. It features
+a simple HTML frontend and is designed to be accessible across various
+browsers and devices. TalkWave supports asynchronous operations and can
+handle multiple requests simultaneously.
 
 ## Features
 
-- Supports multiple GPT models for generating responses.
-- Accepts a range of parameters to customize the response, such as max
-tokens, temperature, and stopping conditions.
-- Stores responses in log files, JSON, and Markdown formats for easy
+- [x] Accepts a range of parameters to customize the response, such as
+max tokens, temperature, and stopping conditions.
+- [x] Accessible design for cross-browser and device compatibility
+(Chrome, Firefox, Safari, Edge, and mobile).
+- [x] Accurately limits billing with limits and ID binding to prevent
+exceeding API limits and incurring charges.
+- [x] Implements rate limiting functionality to prevent exceeding API
+limits and incurring charges.
+- [x] Plain Python implementation with a limited number of dependencies
+for easy installation and use.
+- [x] Stores responses in log files, JSON, and Markdown formats for easy
 analysis and sharing.
-- Provides rate limiting functionality to prevent exceeding API limits
-and incurring charges.
+- [x] Supports multiple GPT models for generating responses, including
+`gpt-3.5-turbo`,`text-davinci-002`,`text-curie-001`,`text-babbage-001`,
+`text-ada-001`.
 
 ## Requirements
 
@@ -47,10 +57,10 @@ pip install openai tabulate python-dotenv
 1. Clone the TalkWave repository:
 
 ```bash
-git clone https://github.com/yourusername/talkwave.git
+git clone https://github.com/sebastienrousseau/talkwave.git
 ```
 
-3. Add your OpenAI API key to a `.env` file in the project directory:
+1. Add your OpenAI API key to a `.env` file in the project directory:
 
 ```bash
 OPENAI_API_KEY="your_api_key_here"
@@ -76,7 +86,8 @@ python talkwave\n
     -T 0.5\n
     -u "test@test.com"\n
     -r 5\n
-    -s "."
+    -s\n
+    -o "json"\n
 ```
 
 For more information on the available options, run:
@@ -95,8 +106,3 @@ Apache License (Version 2.0).
 - [MIT license](https://opensource.org/licenses/MIT)
 
 """
-
-"""The Python talkwave module."""
-__all__ = ["__version__"]
-
-__version__ = "0.0.4"

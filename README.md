@@ -42,7 +42,7 @@ pip install openai tabulate python-dotenv
 1. Clone the TalkWave repository:
 
 ```bash
-git clone https://github.com/yourusername/talkwave.git
+git clone https://github.com/sebastienrousseau/talkwave.git
 ```
 
 1. Add your OpenAI API key to a `.env` file in the project directory:
@@ -52,6 +52,8 @@ OPENAI_API_KEY="your_api_key_here"
 ```
 
 ## Usage 🚀
+
+### Command Line Interface
 
 To use TalkWave, navigate to the project directory in your terminal and
 run the following command:
@@ -73,6 +75,19 @@ For more information on the available options, run:
 ```bash
 python talkwave --help
 ```
+
+### Web Frontend
+
+To use the web frontend, navigate to the project directory in your
+terminal and run the following command:
+
+```bash
+python talkwave/frontend.py
+```
+
+Then, open your browser and navigate to `http://127.0.0.1:5000`. This
+will open the TalkWave web frontend, which you can use to generate
+responses.
 
 ## File Structure 📁
 

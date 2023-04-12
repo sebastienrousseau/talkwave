@@ -37,7 +37,7 @@ TEST_DEPENDENCIES = [
     "pytest>=7.3.0",
 ]
 
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 URL = 'https://github.com/sebastienrousseau/talkwave'
 
 setup(
@@ -68,7 +68,9 @@ setup(
         'natural language processing '
         'OpenAI GPT-3 GPT3 GPT python'
     ),
-    packages=['talkwave'],
+    packages=[
+
+    ],
     install_requires=DEPENDENCIES,
     tests_require=TEST_DEPENDENCIES,
     python_requires='>=3.9',

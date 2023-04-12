@@ -17,15 +17,31 @@
 #
 # '
 from datetime import datetime
-from utils.curl import send_request
+
+try:
+    from talkwave.__version__ import (
+        __logo__,
+        __title__,
+        __version__,
+    )
+except ModuleNotFoundError:
+    from __version__ import (
+        __logo__,
+        __title__,
+        __version__,
+    )
+
+
 import dotenv
 import json
 import os
-import sys
 import sqlite3
+import sys
 
-# set the timeout for the API call to a string value from an environment
-timeout = os.environ.get('TIMEOUT', '90')
+try:
+    from talkwave.curl import send_request
+except ModuleNotFoundError:
+    from curl import send_request
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DATA_DIR" (required).
@@ -39,6 +55,8 @@ timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 '''
 Write the response to a log file.
 '''
+
+data_dir = "data"  # Define the data directory or pass it as an argument
 
 
 def write_response_to_log_file(response, prompt, timestamp):
@@ -63,7 +81,14 @@ text = ["csv", "xls", "html", "txt", "text",
 database = ["db", "sqlite", "sqlite3", "db3", "s3db", "sl3"]
 markdown = ["md", "markdown"]
 html = ["html", "htm"]
-VERSION = '0.0.4'
+# pdf = ["pdf"]
+# image = ["png", "jpg", "jpeg", "gif", "bmp", "tiff", "tif"]
+
+
+# Function Name: write_response_to_file
+'''
+Write the response to a file.
+'''
 
 
 def write_response_to_file(
@@ -104,9 +129,9 @@ def write_response_to_file(
 """)
                 f.write("""
 <link rel=\"stylesheet\"
-      href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\"
-      integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\"
-      crossorigin=\"anonymous\" />\n""")
+href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\"
+integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\"
+crossorigin=\"anonymous\" />\n""")
                 f.write(
                     """
                         <style>
@@ -116,7 +141,7 @@ def write_response_to_file(
                             }
                         </style>\n
                     """)
-                f.write("<title>TalkWave 🐍 Log Analysis</title>\n")
+                f.write("<title>"+__title__+"</title>\n")
                 f.write("</head>\n")
                 f.write("<body>\n")
                 f.write(
@@ -130,12 +155,11 @@ border-bottom border-dark\">""")
                     """
 <h1 class=\"d-flex align-items-center fs-4 text-white mb-0\">
 """)
-                f.write("""
-<img src=\"https://raw.githubusercontent.com/sebastienrousseau/vault/
-main/assets/talkwave/icon/ico-talkwave.svg\"
-width=\"33\"
-height=\"33\"
-class=\"me-3\" alt=\"TalkWave\" />TalkWave</h1>""")
+                f.write(f"""
+<img src="{__logo__}"
+width="33"
+height="33"
+class="me-3" alt="{__title__}" />{__title__}</h1>""")
                 f.write("</div>")
                 f.write("""
 <div class=\"container d-flex flex-wrap justify-content-end\">
@@ -185,7 +209,7 @@ class=\"me-3\" alt=\"TalkWave\" />TalkWave</h1>""")
             os.path.join(data_dir, f"{timestamp}_log.md"),
             "a"
         ) as f:
-            f.write(f"# TalkWave 🐍 (v{VERSION})\n\n")
+            f.write(f"# {__title__} (v{__version__})\n\n")
             f.write(f"## {timestamp}\n\n")
             f.write(f"```bash\n{prompt}\n```\n\n")
             f.write(f"```bash\n{response}\n```\n")
@@ -260,6 +284,9 @@ def main(
     if model_str is None:
         print("Invalid model")
         sys.exit()
+
+    # Create the timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
     json_resp = send_request(
         key,

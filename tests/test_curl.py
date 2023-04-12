@@ -3,7 +3,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock, patch
 from requests.exceptions import Timeout
 
-from curl import send_request
+from talkwave.curl import send_request
 
 
 class TestSendRequest(TestCase):
@@ -132,10 +132,8 @@ class TestSendRequest(TestCase):
             self.assertEqual(response, None)
             self.assertEqual(mock_post.call_count, 1)
 
-    # test case for stop
-
     @patch('requests.post')
-    def test_stop(self, mock_post):
+    def test_stop_message(self, mock_post):
         api_key = 'test_api_key'
         model = 'test_model'
         prompt = 'test_prompt'
@@ -143,10 +141,31 @@ class TestSendRequest(TestCase):
         temperature = 0.5
         user_id = 'test_user'
         rate_limit_seconds = 5
-        stop = 'test_stop'
+        stop = 'stop'
 
-        # First call to send_request should return a response without
+        # Mock response with stop message
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'choices': [
+                {
+                    'text': 'This is a stop message.',
+                    'index': 0,
+                    'logprobs': None,
+                    'finish_reason': 'stop'
+                }
+            ]
+        }
+        mock_post.return_value = mock_response
+
+        # Test that StopIteration is raised when stop message is received
+        with self.assertRaises(StopIteration):
+            send_request(api_key, model, prompt, max_tokens,
+                         temperature, user_id, rate_limit_seconds, stop)
+
+        # Second call to send_request should return a response without
         # raising an exception
+
         mock_response = MagicMock()
         mock_response.status_code = 200
         mock_response.json.return_value = {
@@ -181,9 +200,10 @@ class TestSendRequest(TestCase):
             ]
         }
         self.assertEqual(response, expected_response)
-        self.assertEqual(mock_post.call_count, 1)
+        self.assertEqual(mock_post.call_count, 2)
 
     # test case for rate limit
+
     @patch('requests.post')
     def test_rate_limit(self, mock_post):
         api_key = 'test_api_key'

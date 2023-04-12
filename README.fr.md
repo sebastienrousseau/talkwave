@@ -50,6 +50,8 @@ OPENAI_API_KEY="your_api_key_here"
 
 ## Utilisation 🚀
 
+### Interface de ligne de commande
+
 Pour utiliser TalkWave, accédez au répertoire du projet dans votre terminal et exécutez la commande suivante:
 
 ```bash
@@ -67,6 +69,19 @@ Pour plus d'informations sur les options disponibles, exécutez:
 ```bash
 python talkwave --help
 ```
+
+### Interface Web
+
+Pour utiliser l'interface web, accédez au répertoire du projet dans
+votre terminal et exécutez la commande suivante :
+
+```bash
+python talkwave/frontend.py
+```
+
+Ensuite, ouvrez votre navigateur et rendez-vous sur
+<http://127.0.0.1:5000>. Cela ouvrira l'interface web de TalkWave, que
+vous pourrez utiliser pour générer des réponses.
 
 ## Structure des fichiers 📁
 

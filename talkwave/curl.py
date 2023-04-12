@@ -1,8 +1,13 @@
+import os
 import time
 import requests
 
-# set the timeout for the API call to 10 seconds
-timeout = 10
+# Set the timeout for the API call to a string value from an environment
+# Keep the default value as a string
+timeout_str = os.environ.get('TIMEOUT', '90')
+
+# Convert the timeout value to an integer or float
+timeout = int(timeout_str)
 
 # Function Name: request
 
