@@ -1,12 +1,12 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
-<img src="https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/icon/ico-talkwave.svg" alt="talkwave logo" width="261" align="right" />
+<img src="https://kura.pro/talkwave/images/logos/talkwave.svg" alt="talkwave logo" width="261" align="right" />
 
 <!-- markdownlint-enable MD033 MD041 -->
 
 # Python TalkWave
 
-![talkwave banner](https://raw.githubusercontent.com/sebastienrousseau/vault/main/assets/talkwave/title/title-talkwave.svg)
+![talkwave banner](https://kura.pro/talkwave/images/titles/title-talkwave.svg)
 
 ## Overview 📖
 
