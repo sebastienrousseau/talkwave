@@ -24,7 +24,7 @@ SHORT_DESCRIPTION = (
 )
 
 DEPENDENCIES = [
-    'Flask==2.2.3',
+    'Flask==2.3.2',
     'openai==0.27.2',
     'python-dotenv==1.0.0',
     'requests==2.28.2',
