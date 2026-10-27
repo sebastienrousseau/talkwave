@@ -66,6 +66,10 @@ text = ["csv", "xls", "html", "txt", "text", "log", "json", "xml", "yaml", "yml"
 database = ["db", "sqlite", "sqlite3", "db3", "s3db", "sl3"]
 markdown = ["md", "markdown"]
 html = ["html", "htm"]
+# Every supported format, mapped to the file extension written to disk. The
+# extension always comes from this table, never from the caller's string, so a
+# file name cannot carry path separators or traversal (CodeQL py/path-injection).
+_EXTENSIONS: dict[str, str] = {name: name for name in text + database + markdown + html}
 # pdf = ["pdf"]
 # image = ["png", "jpg", "jpeg", "gif", "bmp", "tiff", "tif"]
 
@@ -193,11 +197,12 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
             f.write(f"```bash\n{response}\n```\n")
     elif file_format in text:
         # elif file_format in ["csv", "xls", "html", "txt", "text"]:
-        with open(os.path.join(data_dir, f"{timestamp}_log.{file_format}"), "a") as f:
+        extension = _EXTENSIONS[file_format]
+        with open(os.path.join(data_dir, f"{timestamp}_log.{extension}"), "a") as f:
             f.write(f"{timestamp}|{prompt}|{response}\n")
     elif file_format in database:
         # set the path to the database file
-        db_path = os.path.join(data_dir, f"log.{file_format}")
+        db_path = os.path.join(data_dir, f"log.{_EXTENSIONS[file_format]}")
         # create a new database file if it doesn't exist
         if not os.path.exists(db_path):
             conn = sqlite3.connect(db_path)
