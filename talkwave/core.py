@@ -32,11 +32,12 @@ except ModuleNotFoundError:
     )
 
 
-import dotenv
 import json
 import os
 import sqlite3
 import sys
+
+import dotenv
 
 try:
     from talkwave.curl import send_request

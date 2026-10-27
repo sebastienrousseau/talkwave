@@ -21,16 +21,18 @@ This allows using TalkWave with third-party libraries without modifying
 their code.
 """
 
-from core import main
-from parse import parse_args
-from tabulate import tabulate
 import os
 import sys
+
+from tabulate import tabulate
+
 from __version__ import (
     __description__,
     __title__,
     __version__,
 )
+from core import main
+from parse import parse_args
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DIR_PATH" (required).

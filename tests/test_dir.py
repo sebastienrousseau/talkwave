@@ -1,6 +1,7 @@
 import os
 import unittest
 from unittest import TestCase
+
 from talkwave.dir import set_data_directory
 
 

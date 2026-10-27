@@ -1,6 +1,7 @@
 import unittest
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
+
 from requests.exceptions import Timeout
 
 from talkwave.curl import send_request
@@ -118,7 +119,7 @@ class TestSendRequest(TestCase):
 
         mock_post.side_effect = Timeout()
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(Timeout):
             response = send_request(
                 api_key,
                 model,

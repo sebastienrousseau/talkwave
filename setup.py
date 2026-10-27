@@ -16,7 +16,7 @@
 
 from setuptools import setup
 
-with open('README.md', 'r') as fh:
+with open('README.md') as fh:
     LONG_DESCRIPTION = fh.read().strip()
 
 SHORT_DESCRIPTION = (

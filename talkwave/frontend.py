@@ -15,8 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import render_template, request
 import flask
+from flask import render_template, request
+
 from core import main
 
 # Initialize a Flask app instance

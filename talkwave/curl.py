@@ -1,5 +1,6 @@
 import os
 import time
+
 import requests
 
 # Set the timeout for the API call to a string value from an environment

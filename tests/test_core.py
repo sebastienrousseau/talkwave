@@ -1,8 +1,8 @@
-import os
 import json
-
+import os
 from datetime import datetime
-from unittest import TestCase, main as unittest_main
+from unittest import TestCase
+from unittest import main as unittest_main
 
 from talkwave.core import write_response_to_file
 
@@ -33,7 +33,7 @@ class TestCore(TestCase):
         write_response_to_file(
             response, prompt, file_format, timestamp)
         with open(
-            f'{root_dir}/{test_data_dir}/{timestamp}_log.json', 'r'
+            f'{root_dir}/{test_data_dir}/{timestamp}_log.json'
         ) as f:
             self.assertEqual(f.read().strip(), expected_output)
 
@@ -47,7 +47,7 @@ class TestCore(TestCase):
         file_format = 'csv'
         write_response_to_file(
             response['choices'][0]['text'], prompt, file_format, timestamp)
-        with open(f'{root_dir}/{test_data_dir}/{timestamp}_log.csv', 'r') as f:
+        with open(f'{root_dir}/{test_data_dir}/{timestamp}_log.csv') as f:
             actual_output = f.read().strip()
         self.assertEqual(expected_output, actual_output)
 
@@ -60,7 +60,7 @@ class TestCore(TestCase):
         file_format = 'txt'
         write_response_to_file(
             response['choices'][0]['text'], prompt, file_format, timestamp)
-        with open(f'{root_dir}/{test_data_dir}/{timestamp}_log.txt', 'r') as f:
+        with open(f'{root_dir}/{test_data_dir}/{timestamp}_log.txt') as f:
             actual_output = f.read().strip()
         self.assertEqual(expected_output, actual_output)
 
@@ -91,7 +91,7 @@ class TestCore(TestCase):
         write_response_to_file(
             response, prompt, file_format, timestamp)
         with open(
-            f'{root_dir}/{test_data_dir}/{timestamp}_log.json', 'r'
+            f'{root_dir}/{test_data_dir}/{timestamp}_log.json'
         ) as f:
             self.assertEqual(f.read().strip(), expected_output)
 
