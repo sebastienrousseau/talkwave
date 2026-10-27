@@ -46,16 +46,17 @@ except ModuleNotFoundError:
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DATA_DIR" (required).
-data_dir = os.path.join(os.path.dirname(os.path.realpath(
-    __file__)), os.environ.get('DATA_DIR', 'data'))
+data_dir = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), os.environ.get("DATA_DIR", "data")
+)
 
 # set the timestamp for the API call in ISO
 timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 # Function Name: write_response_to_log_file
-'''
+"""
 Write the response to a log file.
-'''
+"""
 
 data_dir = "data"  # Define the data directory or pass it as an argument
 
@@ -67,18 +68,17 @@ def write_response_to_log_file(response, prompt, timestamp):
     if data_dir is None:
         print("Error: Directory path is not provided.")
         return
-    with open(data_dir + '/log.txt', 'a') as f:
+    with open(data_dir + "/log.txt", "a") as f:
         f.write(f"{timestamp}|{prompt}|{response}\n")
 
 
 # Function Name: write_response_to_file
-'''
+"""
 Write the response to a file.
-'''
+"""
 
 # List of valid file formats for text files
-text = ["csv", "xls", "html", "txt", "text",
-        "log", "json", "xml", "yaml", "yml"]
+text = ["csv", "xls", "html", "txt", "text", "log", "json", "xml", "yaml", "yml"]
 database = ["db", "sqlite", "sqlite3", "db3", "s3db", "sl3"]
 markdown = ["md", "markdown"]
 html = ["html", "htm"]
@@ -87,18 +87,12 @@ html = ["html", "htm"]
 
 
 # Function Name: write_response_to_file
-'''
+"""
 Write the response to a file.
-'''
+"""
 
 
-def write_response_to_file(
-    response,
-    prompt,
-    file_format,
-    timestamp,
-    data_dir=data_dir
-):
+def write_response_to_file(response, prompt, file_format, timestamp, data_dir=data_dir):
     """
     Write the response to a file of the specified format.
     """
@@ -107,21 +101,17 @@ def write_response_to_file(
         return
 
     if file_format == "json":
-        with open(
-            os.path.join(data_dir, f"{timestamp}_log.json"),
-            "a"
-        ) as f:
+        with open(os.path.join(data_dir, f"{timestamp}_log.json"), "a") as f:
             json.dump(response, f)
     elif file_format == "html":
         with open(os.path.join(data_dir, "log.html"), "a") as f:
             if os.stat(os.path.join(data_dir, "log.html")).st_size == 0:
-
                 f.write("<!DOCTYPE html>\n")
                 f.write("""
 <html lang=\"en\" itemscope itemtype=\"http://schema.org/WebPage\">\n
 """)
                 f.write("<head>\n")
-                f.write("  <meta charset=\"utf-8\">\n")
+                f.write('  <meta charset="utf-8">\n')
                 f.write("""
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n
 """)
@@ -141,21 +131,24 @@ crossorigin=\"anonymous\" />\n""")
                                 word-wrap: break-word;
                             }
                         </style>\n
-                    """)
-                f.write("<title>"+__title__+"</title>\n")
+                    """
+                )
+                f.write("<title>" + __title__ + "</title>\n")
                 f.write("</head>\n")
                 f.write("<body>\n")
                 f.write(
                     """
 <header class=\"bd-header bg-dark py-3 d-flex align-items-stretch
-border-bottom border-dark\">""")
+border-bottom border-dark\">"""
+                )
                 f.write("""
 <div class=\"container-fluid d-flex align-items-center\">
 """)
                 f.write(
                     """
 <h1 class=\"d-flex align-items-center fs-4 text-white mb-0\">
-""")
+"""
+                )
                 f.write(f"""
 <img src="{__logo__}"
 width="33"
@@ -168,35 +161,32 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
                 f.write("</div>")
                 f.write("</header>")
                 f.write("  <main>\n")
-                f.write("    <div class=\"container-fluid py-3\">\n")
+                f.write('    <div class="container-fluid py-3">\n')
 
             # Loop over each response and write the prompt and response
             # to the HTML file
             for i in range(len(response["choices"])):
                 # Parse the timestamp string into a datetime object
-                dt = datetime.fromisoformat(
-                    timestamp.replace("Z", "+00:00")
-                )
+                dt = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
 
                 # Format the datetime object into a more readable string
                 formatted_timestamp = dt.strftime("%Y-%m-%d %H:%M:%S")
 
-                f.write(
-                    f"<p><strong><time>"
-                    f"{formatted_timestamp}</time></strong></p>\n"
-                )
+                f.write(f"<p><strong><time>{formatted_timestamp}</time></strong></p>\n")
                 f.write("<ul>\n")
                 f.write(
                     f"""
 <li>
     <strong>Prompt:</strong>
-    <pre class=\"wrap-code\"><code>{prompt}</code></pre></li>\n""")
+    <pre class=\"wrap-code\"><code>{prompt}</code></pre></li>\n"""
+                )
                 f.write(
                     f"""
 <li><strong>Response:</strong>
 <pre class=\"wrap-code\">
-<code>{response['choices'][i]['message']['content']}</code>
-</pre></li>\n""")
+<code>{response["choices"][i]["message"]["content"]}</code>
+</pre></li>\n"""
+                )
                 f.write("</ul>\n")
                 f.write("    <hr />\n")
 
@@ -206,20 +196,14 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
                 f.write("</body>\n")
                 f.write("</html>\n")
     elif file_format in markdown:
-        with open(
-            os.path.join(data_dir, f"{timestamp}_log.md"),
-            "a"
-        ) as f:
+        with open(os.path.join(data_dir, f"{timestamp}_log.md"), "a") as f:
             f.write(f"# {__title__} (v{__version__})\n\n")
             f.write(f"## {timestamp}\n\n")
             f.write(f"```bash\n{prompt}\n```\n\n")
             f.write(f"```bash\n{response}\n```\n")
     elif file_format in text:
         # elif file_format in ["csv", "xls", "html", "txt", "text"]:
-        with open(
-            os.path.join(data_dir, f"{timestamp}_log.{file_format}"),
-            "a"
-        ) as f:
+        with open(os.path.join(data_dir, f"{timestamp}_log.{file_format}"), "a") as f:
             f.write(f"{timestamp}|{prompt}|{response}\n")
     elif file_format in database:
         # set the path to the database file
@@ -229,8 +213,7 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
             conn = sqlite3.connect(db_path)
             c = conn.cursor()
             c.execute(
-                "CREATE TABLE responses (timestamp TEXT, prompt TEXT, "
-                "response TEXT)"
+                "CREATE TABLE responses (timestamp TEXT, prompt TEXT, response TEXT)"
             )
             conn.commit()
             conn.close()
@@ -238,9 +221,8 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
         conn = sqlite3.connect(db_path)
         c = conn.cursor()
         c.execute(
-            "INSERT INTO responses (timestamp, prompt, response) "
-            "VALUES (?, ?, ?)",
-            (timestamp, prompt, json.dumps(response))
+            "INSERT INTO responses (timestamp, prompt, response) VALUES (?, ?, ?)",
+            (timestamp, prompt, json.dumps(response)),
         )
         conn.commit()
         conn.close()
@@ -250,10 +232,10 @@ class="me-3" alt="{__title__}" />{__title__}</h1>""")
 
 
 # Function Name: main
-'''
+"""
 Main function to interact with the OpenAI API using the given
 parameters.
-'''
+"""
 
 
 def main(
@@ -264,21 +246,21 @@ def main(
     user_id: str,
     rate_limit_seconds: int,
     stop: str,
-    output_format: str
+    output_format: str,
 ):
     """
     Main function to interact with the OpenAI API using the given
     parameters.
     """
     dotenv.load_dotenv()
-    key = dotenv.get_key('.env', 'OPENAI_API_KEY')
+    key = dotenv.get_key(".env", "OPENAI_API_KEY")
 
     model_dict = {
         1: "gpt-3.5-turbo",
         2: "text-davinci-002",
         3: "text-curie-001",
         4: "text-babbage-001",
-        5: "text-ada-001"
+        5: "text-ada-001",
     }
 
     model_str = model_dict.get(model)
@@ -297,11 +279,11 @@ def main(
         temperature,
         user_id,
         rate_limit_seconds,
-        stop
+        stop,
     )
 
-    if 'choices' in json_resp:
-        assistant_reply = json_resp['choices'][0]['message']['content'].strip()
+    if "choices" in json_resp:
+        assistant_reply = json_resp["choices"][0]["message"]["content"].strip()
         print(assistant_reply)
 
         write_response_to_file(json_resp, prompt, output_format, timestamp)

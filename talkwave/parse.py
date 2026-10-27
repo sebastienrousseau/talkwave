@@ -26,14 +26,14 @@ response or print it in a user-defined way.
             4: text-ada-001
 
             (Default: 1: text-davinci-002)
-        """
+        """,
     )
 
     parser.add_argument(
         "-p",
         "--prompt",
         required=not sys.stdin.isatty(),
-        help="The prompt to send to the AI. (Required)"
+        help="The prompt to send to the AI. (Required)",
     )
 
     parser.add_argument(
@@ -41,7 +41,7 @@ response or print it in a user-defined way.
         "--tokens",
         type=int,
         default=50,
-        help="The maximum number of tokens in the response. (Default: 50)"
+        help="The maximum number of tokens in the response. (Default: 50)",
     )
 
     parser.add_argument(
@@ -49,7 +49,7 @@ response or print it in a user-defined way.
         "--temperature",
         type=float,
         default=0.5,
-        help="The sampling temperature for the AI response. (Default: 0.5)"
+        help="The sampling temperature for the AI response. (Default: 0.5)",
     )
 
     parser.add_argument(
@@ -57,7 +57,7 @@ response or print it in a user-defined way.
         "--user_id",
         type=str,
         default="example_user",
-        help="The user ID to bind with the request. (Default: example_user)"
+        help="The user ID to bind with the request. (Default: example_user)",
     )
 
     parser.add_argument(
@@ -65,17 +65,17 @@ response or print it in a user-defined way.
         "--rate_limit_seconds",
         type=int,
         default=5,
-        help="The rate limit in seconds for API requests. (Default: 5)"
+        help="The rate limit in seconds for API requests. (Default: 5)",
     )
 
     parser.add_argument(
         "-s",
         "--stop",
-        action='store_true',
+        action="store_true",
         help="""
             If set, a stop sequence will be added to the request.
             (Default: False)
-        """
+        """,
     )
 
     parser.add_argument(
@@ -83,22 +83,22 @@ response or print it in a user-defined way.
         "--output",
         type=str,
         choices=[
-            'csv',
-            'db',
-            'db3',
-            'html',
-            'json',
-            'markdown',
-            'md',
-            's3db',
-            'sl3',
-            'sqlite',
-            'sqlite3',
-            'text',
-            'txt'
+            "csv",
+            "db",
+            "db3",
+            "html",
+            "json",
+            "markdown",
+            "md",
+            "s3db",
+            "sl3",
+            "sqlite",
+            "sqlite3",
+            "text",
+            "txt",
         ],
-        default='json',
-        help="The output format for the response. (Default: json)"
+        default="json",
+        help="The output format for the response. (Default: json)",
     )
 
     # Parse the command-line arguments

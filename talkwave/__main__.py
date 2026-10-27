@@ -36,8 +36,9 @@ from parse import parse_args
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DIR_PATH" (required).
-dir_path = os.path.join(os.path.dirname(os.path.realpath(
-    __file__)), os.environ.get('DIR_PATH', 'data'))
+dir_path = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), os.environ.get("DIR_PATH", "data")
+)
 
 if __name__ == "__main__":
     # Set the title and description of the program
@@ -45,8 +46,7 @@ if __name__ == "__main__":
     description = __description__
 
     # Print the title and description of the program
-    title_table = tabulate([[title], [description]],
-                           tablefmt="rounded_grid")
+    title_table = tabulate([[title], [description]], tablefmt="rounded_grid")
     print()
     print(title_table)
     print()
@@ -63,6 +63,6 @@ if __name__ == "__main__":
         args.user_id,
         args.rate_limit_seconds,
         args.stop,
-        args.output
+        args.output,
     )
     sys.exit(0)

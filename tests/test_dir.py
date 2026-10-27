@@ -6,7 +6,6 @@ from talkwave.dir import set_data_directory
 
 
 class TestDataDirectory(TestCase):
-
     # test case for setting the data directory
     def test_set_data_directory(self):
         path = "/data"
@@ -36,5 +35,5 @@ class TestDataDirectory(TestCase):
         self.assertEqual(actual_location, expected_location)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
