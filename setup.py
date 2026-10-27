@@ -28,13 +28,17 @@ DEPENDENCIES = [
     'openai==0.27.2',
     'python-dotenv==1.2.2',
     'requests==2.33.0',
-    'tabulate==0.9.0'
+    'tabulate==0.9.0',
+    'aiohttp>=3.14.4',
+    'multidict>=6.9.1',
+    'urllib3>=2.8.0',
+    'Werkzeug>=3.1.9',
 ]
 
 TEST_DEPENDENCIES = [
     "coverage>=7.2.3",
     "pytest-cov>=4.0.0",
-    "pytest>=7.3.0",
+    "pytest>=9.0.3",
 ]
 
 VERSION = '0.0.6'
@@ -58,8 +62,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Operating System :: OS Independent',
     ],
@@ -73,5 +75,5 @@ setup(
     ],
     install_requires=DEPENDENCIES,
     tests_require=TEST_DEPENDENCIES,
-    python_requires='>=3.9',
+    python_requires='>=3.11',
 )
