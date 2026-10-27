@@ -9,7 +9,7 @@ from talkwave.curl import send_request
 
 class TestSendRequest(TestCase):
     # test case for missing user_id
-    def test_missing_user_id(self):
+    def test_missing_user_id(self) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"
@@ -32,7 +32,7 @@ class TestSendRequest(TestCase):
             )
 
     # test case for rate limit period of 0
-    def test_rate_limit_period_of_0(self):
+    def test_rate_limit_period_of_0(self) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"
@@ -56,7 +56,7 @@ class TestSendRequest(TestCase):
 
     # test case for successful request
     @patch("requests.post")
-    def test_successful_request(self, mock_post):
+    def test_successful_request(self, mock_post: MagicMock) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"
@@ -106,7 +106,7 @@ class TestSendRequest(TestCase):
 
     # test case for timeout
     @patch("requests.post")
-    def test_timeout(self, mock_post):
+    def test_timeout(self, mock_post: MagicMock) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"
@@ -133,7 +133,7 @@ class TestSendRequest(TestCase):
             self.assertEqual(mock_post.call_count, 1)
 
     @patch("requests.post")
-    def test_stop_message(self, mock_post):
+    def test_stop_message(self, mock_post: MagicMock) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"
@@ -213,7 +213,7 @@ class TestSendRequest(TestCase):
     # test case for rate limit
 
     @patch("requests.post")
-    def test_rate_limit(self, mock_post):
+    def test_rate_limit(self, mock_post: MagicMock) -> None:
         api_key = "test_api_key"
         model = "test_model"
         prompt = "test_prompt"

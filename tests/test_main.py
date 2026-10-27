@@ -19,7 +19,7 @@ from talkwave.parse import parse_args
 
 
 class TestMain(TestCase):
-    def test_parse_args(self):
+    def test_parse_args(self) -> None:
         # Test with no arguments
         with patch.object(sys, "argv", ["__main__.py"]):
             with self.assertRaises(SystemExit):

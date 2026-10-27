@@ -6,19 +6,21 @@ from talkwave.core import main
 
 
 class TestTalkWave(unittest.TestCase):
+    log_file: str
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         # Create a temporary log file for testing
         cls.log_file = "test_log.md"
         with open(cls.log_file, "w") as f:
             f.write("# Test Log\n")
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         # Delete the temporary log file
         os.remove(cls.log_file)
 
-    def test_main(self):
+    def test_main(self) -> None:
         # Mock the user input
         with patch("builtins.input", side_effect=["test prompt", "exit"]):
             # Mock the API response

@@ -21,6 +21,7 @@ import os
 import sqlite3
 import sys
 from datetime import datetime
+from typing import Any
 
 import dotenv
 
@@ -29,7 +30,7 @@ from talkwave.curl import send_request
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DATA_DIR" (required).
-data_dir = os.path.join(
+data_dir: str | None = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), os.environ.get("DATA_DIR", "data")
 )
 
@@ -44,7 +45,7 @@ Write the response to a log file.
 data_dir = "data"  # Define the data directory or pass it as an argument
 
 
-def write_response_to_log_file(response, prompt, timestamp):
+def write_response_to_log_file(response: Any, prompt: str, timestamp: str) -> None:
     """
     Write the response and prompt to a log file.
     """
@@ -75,7 +76,13 @@ Write the response to a file.
 """
 
 
-def write_response_to_file(response, prompt, file_format, timestamp, data_dir=data_dir):
+def write_response_to_file(
+    response: Any,
+    prompt: str,
+    file_format: str,
+    timestamp: str,
+    data_dir: str | None = data_dir,
+) -> None:
     """
     Write the response to a file of the specified format.
     """
@@ -228,9 +235,9 @@ def main(
     temperature: float,
     user_id: str,
     rate_limit_seconds: int,
-    stop: str,
+    stop: str | bool | None,
     output_format: str,
-):
+) -> str | None:
     """
     Main function to interact with the OpenAI API using the given
     parameters.
@@ -266,7 +273,7 @@ def main(
     )
 
     if "choices" in json_resp:
-        assistant_reply = json_resp["choices"][0]["message"]["content"].strip()
+        assistant_reply: str = json_resp["choices"][0]["message"]["content"].strip()
         print(assistant_reply)
 
         write_response_to_file(json_resp, prompt, output_format, timestamp)

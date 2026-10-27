@@ -9,7 +9,7 @@ from talkwave.core import write_response_to_file
 
 class TestCore(TestCase):
     # test case for writing response to a file
-    def test_write_response_to_file(self):
+    def test_write_response_to_file(self) -> None:
         response = {"choices": [{"text": "I am fine."}]}
         prompt = "How are you?"
         file_format = "json"
@@ -55,7 +55,7 @@ class TestCore(TestCase):
     # test case for writing response to a file with an invalid file
     # format
 
-    def test_write_response_to_file_invalid_file_format(self):
+    def test_write_response_to_file_invalid_file_format(self) -> None:
         response = {"choices": [{"text": "I am fine."}]}
         prompt = "How are you?"
         file_format = "txt"

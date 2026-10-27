@@ -1,5 +1,6 @@
 import os
 import time
+from typing import Any
 
 import requests
 
@@ -37,19 +38,19 @@ timeout = int(timeout_str)
 # function from hanging indefinitely in case of an error.
 
 
-last_request_timestamps = {}
+last_request_timestamps: dict[str, float] = {}
 
 
 def send_request(
-    api_key,
-    model,
-    prompt,
-    max_tokens,
-    temperature,
-    user_id,
-    rate_limit_seconds,
-    stop,
-):
+    api_key: str | None,
+    model: str,
+    prompt: str,
+    max_tokens: int,
+    temperature: float,
+    user_id: str,
+    rate_limit_seconds: float,
+    stop: str | bool | None,
+) -> dict[str, Any]:
     if not user_id:
         raise ValueError("User ID must be provided")
 
@@ -81,17 +82,18 @@ def send_request(
 
     check_response_for_errors(response)
 
-    if stop:
+    if isinstance(stop, str) and stop:
         response_json = response.json()
         if "choices" in response_json and response_json["choices"]:
             for choice in response_json["choices"]:
                 if "text" in choice and stop in choice["text"].lower():
                     raise StopIteration('Received "stop" message from AI')
 
-    return response.json()
+    result: dict[str, Any] = response.json()
+    return result
 
 
-def wait_if_rate_limited(user_id, rate_limit_seconds):
+def wait_if_rate_limited(user_id: str, rate_limit_seconds: float) -> None:
     last_timestamp = last_request_timestamps.get(user_id, 0)
 
     if rate_limit_seconds and time.time() - last_timestamp < rate_limit_seconds:
@@ -100,7 +102,7 @@ def wait_if_rate_limited(user_id, rate_limit_seconds):
             time.sleep(time_to_sleep)
 
 
-def check_response_for_errors(response):
+def check_response_for_errors(response: requests.Response) -> None:
     if response.status_code != 200:
         raise Exception(
             f"Request to OpenAI API failed with status code {response.status_code}."

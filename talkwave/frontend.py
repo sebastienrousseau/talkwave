@@ -38,7 +38,7 @@ app.config["DEBUG"] = True
 
 
 @app.route("/", methods=["GET", "POST"])
-def index():
+def index() -> str:
     """
     This function defines the behavior of the root URL '/'.
 

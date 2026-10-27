@@ -2,7 +2,7 @@ import argparse
 import sys
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     # Set up the command-line argument parser
     parser = argparse.ArgumentParser(
         description="""
