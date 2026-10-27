@@ -15,10 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import sys
+
+# Run as a script (`python talkwave`, `python talkwave/frontend.py`), Python
+# puts talkwave/ itself on sys.path, not the project root; add the root so
+# the package imports below resolve the same way they do for an install.
+if __package__ in (None, ""):
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import flask
 from flask import render_template, request
 
-from core import main
+from talkwave.core import main
 
 # Initialize a Flask app instance
 app = flask.Flask(__name__)

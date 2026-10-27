@@ -16,33 +16,16 @@
 # limitations under the License.
 #
 # '
-from datetime import datetime
-
-try:
-    from talkwave.__version__ import (
-        __logo__,
-        __title__,
-        __version__,
-    )
-except ModuleNotFoundError:
-    from __version__ import (
-        __logo__,
-        __title__,
-        __version__,
-    )
-
-
 import json
 import os
 import sqlite3
 import sys
+from datetime import datetime
 
 import dotenv
 
-try:
-    from talkwave.curl import send_request
-except ModuleNotFoundError:
-    from curl import send_request
+from talkwave.__version__ import __logo__, __title__, __version__
+from talkwave.curl import send_request
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DATA_DIR" (required).

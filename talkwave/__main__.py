@@ -24,15 +24,17 @@ their code.
 import os
 import sys
 
+# Run as a script (`python talkwave`, `python talkwave/frontend.py`), Python
+# puts talkwave/ itself on sys.path, not the project root; add the root so
+# the package imports below resolve the same way they do for an install.
+if __package__ in (None, ""):
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from tabulate import tabulate
 
-from __version__ import (
-    __description__,
-    __title__,
-    __version__,
-)
-from core import main
-from parse import parse_args
+from talkwave.__version__ import __description__, __title__, __version__
+from talkwave.core import main
+from talkwave.parse import parse_args
 
 # set the directory where the data is stored, value is a string from an
 # environment variable "DIR_PATH" (required).
@@ -40,7 +42,9 @@ dir_path = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), os.environ.get("DIR_PATH", "data")
 )
 
-if __name__ == "__main__":
+
+def run() -> None:
+    """Print the banner, parse the command line and call core.main()."""
     # Set the title and description of the program
     title = __title__ + " (v" + __version__ + ")"
     description = __description__
@@ -66,3 +70,7 @@ if __name__ == "__main__":
         args.output,
     )
     sys.exit(0)
+
+
+if __name__ == "__main__":
+    run()
