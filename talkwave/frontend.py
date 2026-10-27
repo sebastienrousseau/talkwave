@@ -15,9 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import render_template, request
+import os
+import sys
+
+# Run as a script (`python talkwave`, `python talkwave/frontend.py`), Python
+# puts talkwave/ itself on sys.path, not the project root; add the root so
+# the package imports below resolve the same way they do for an install.
+if __package__ in (None, ""):
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import flask
-from core import main
+from flask import render_template, request
+
+from talkwave.core import main
 
 # Initialize a Flask app instance
 app = flask.Flask(__name__)
@@ -27,8 +37,8 @@ app.config["DEBUG"] = True
 # app.config["PROPAGATE_EXCEPTIONS"] = True
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+@app.route("/", methods=["GET", "POST"])
+def index() -> str:
     """
     This function defines the behavior of the root URL '/'.
 
@@ -43,29 +53,15 @@ def index():
     Returns:
         A rendered HTML template.
     """
-    if request.method == 'POST':
-        model = int(
-            request.form.get('model', 1)
-        )
-        prompt = request.form['prompt']
-        max_tokens = int(
-            request.form.get('max_tokens', 50)
-        )
-        temperature = float(
-            request.form.get('temperature', 0.5)
-        )
-        user_id = str(
-            request.form.get('user_id', 'example_user')
-        )
-        rate_limit_seconds = int(
-            request.form.get('rate_limit_seconds', 5)
-        )
-        stop = str(
-            request.form.get('stop', None)
-        )
-        output_format = str(
-            request.form.get('output_format', 'json')
-        )
+    if request.method == "POST":
+        model = int(request.form.get("model", 1))
+        prompt = request.form["prompt"]
+        max_tokens = int(request.form.get("max_tokens", 50))
+        temperature = float(request.form.get("temperature", 0.5))
+        user_id = str(request.form.get("user_id", "example_user"))
+        rate_limit_seconds = int(request.form.get("rate_limit_seconds", 5))
+        stop = str(request.form.get("stop", None))
+        output_format = str(request.form.get("output_format", "json"))
 
         response = main(
             model,
@@ -75,18 +71,16 @@ def index():
             user_id,
             rate_limit_seconds,
             stop,
-            output_format
+            output_format,
         )
         return render_template(
-            'index.html',
-            response=response,
-            prompt=request.form['prompt']
+            "index.html", response=response, prompt=request.form["prompt"]
         )
     else:
-        return render_template('index.html')
+        return render_template("index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """
     This block of code starts the Flask app if the script is run as the
     main module.

@@ -16,62 +16,60 @@
 
 from setuptools import setup
 
-with open('README.md', 'r') as fh:
+with open("README.md") as fh:
     LONG_DESCRIPTION = fh.read().strip()
 
-SHORT_DESCRIPTION = (
-    "TalkWave is an AI chatbot for developers written in Python."
-)
+SHORT_DESCRIPTION = "TalkWave is an AI chatbot for developers written in Python."
 
 DEPENDENCIES = [
-    'Flask==3.1.3',
-    'openai==0.27.2',
-    'python-dotenv==1.2.2',
-    'requests==2.33.0',
-    'tabulate==0.9.0'
+    "Flask==3.1.3",
+    "openai==0.27.2",
+    "python-dotenv==1.2.2",
+    "requests==2.33.0",
+    "tabulate==0.9.0",
+    "aiohttp>=3.14.4",
+    "multidict>=6.9.1",
+    "urllib3>=2.8.0",
+    "Werkzeug>=3.1.9",
 ]
 
 TEST_DEPENDENCIES = [
     "coverage>=7.2.3",
     "pytest-cov>=4.0.0",
-    "pytest>=7.3.0",
+    "pytest>=9.0.3",
 ]
 
-VERSION = '0.0.6'
-URL = 'https://github.com/sebastienrousseau/talkwave'
+VERSION = "0.0.6"
+URL = "https://github.com/sebastienrousseau/talkwave"
 
 setup(
-    name='talkwave',
+    name="talkwave",
     version=VERSION,
     description=SHORT_DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     url=URL,
-    author='Sebastien Rousseau',
-    author_email='sebastian.rousseau@gmail.com',
-    license='Apache License 2.0',
+    author="Sebastien Rousseau",
+    author_email="sebastian.rousseau@gmail.com",
+    license="Apache License 2.0",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Financial and Insurance Industry',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Operating System :: OS Independent',
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Financial and Insurance Industry",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Operating System :: OS Independent",
     ],
     keywords=(
-        'talkwave, chatbot, AI, machine learning'
-        'natural language processing '
-        'OpenAI GPT-3 GPT3 GPT python'
+        "talkwave, chatbot, AI, machine learning"
+        "natural language processing "
+        "OpenAI GPT-3 GPT3 GPT python"
     ),
-    packages=[
-
-    ],
+    packages=[],
     install_requires=DEPENDENCIES,
     tests_require=TEST_DEPENDENCIES,
-    python_requires='>=3.9',
+    python_requires=">=3.11",
 )
